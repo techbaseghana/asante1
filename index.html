@@ -833,7 +833,6 @@
             color: #6c757d;
             font-size: 0.9rem;
         }
-
         /* === NEW: Connection Status Panel Styles === */
         .stat-card {
             position: relative;
@@ -870,7 +869,6 @@
             display: flex;
             align-items: center;
         }
-
         @media (max-width: 768px) {
             .app-body {
                 flex-direction: column;
@@ -917,7 +915,6 @@
         <div class="app-body">
             <div class="sidebar">
                 <div class="dropdown-nav" id="sidebar-nav">
-                    <!-- Dynamic sidebar content will be generated here -->
                 </div>
             </div>
             <div class="main-content">
@@ -1082,7 +1079,6 @@
                             <label class="form-label" for="member-dob">Date of Birth</label>
                             <input type="text" class="form-control" id="member-dob" placeholder="Click to select date" readonly>
                             <div class="calendar-container" id="birthday-calendar">
-                                <!-- Calendar will be generated here -->
                             </div>
                         </div>
                         <div class="form-group">
@@ -1221,7 +1217,6 @@
                                 <i class="fas fa-bug"></i> Manual Test
                             </button>
                         </div>
-
                         <!-- ✅ NEW: Connection Status Panel -->
                         <div class="form-group" style="margin-top: 25px;">
                             <h4 style="margin-bottom: 12px;">Connection Status</h4>
@@ -1404,15 +1399,14 @@
         let availableTribes = ['Akan', 'Ewe', 'Ga', 'Dagomba', 'Fante'];
         let availableDepartments = ['General', 'Education', 'Commerce', 'Health', 'Agriculture'];
         let availablePositions = ['Member', 'Leader', 'Secretary', 'Treasurer', 'Organizer'];
-        let availableChapters = []; // Start with empty chapters
-        let availableGroups = []; // Start with empty groups
+        let availableChapters = [];
+        let availableGroups = [];
         let cameraStream = null;
         let settingsPassword = "admin123";
         let users = [
             { username: 'admin', password: 'admin123', role: 'admin' },
             { username: 'user', password: 'user123', role: 'user' }
         ];
-        // Menu structure
         let menuStructure = [
             {
                 id: 'attendance',
@@ -1450,12 +1444,11 @@
                 ]
             }
         ];
-        // Default URLs - user can change these
         let SCRIPT_URL = '';
         let SHEET_ID = '';
         let isCloudMode = false;
 
-        // DOM Elements (existing ones)
+        // DOM Elements
         const searchInput = document.getElementById('search-input');
         const searchBtn = document.getElementById('search-btn');
         const searchResults = document.getElementById('search-results');
@@ -1554,8 +1547,6 @@
         const viewAllMembersBtn = document.getElementById('view-all-members-btn');
         const modeIndicator = document.getElementById('mode-indicator');
         const sidebarNav = document.getElementById('sidebar-nav');
-
-        // ✅ NEW: Status Indicator Elements
         const internetDot = document.getElementById('internet-dot');
         const internetStatus = document.getElementById('internet-status');
         const backendDot = document.getElementById('backend-dot');
@@ -1563,7 +1554,7 @@
         const sheetDot = document.getElementById('sheet-dot');
         const sheetStatus = document.getElementById('sheet-status');
 
-        // Initialize the application
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
             setupEventListeners();
@@ -1580,14 +1571,11 @@
             renderChaptersList();
             renderGroupsList();
             updateModeIndicator();
-
-            // ✅ NEW: Init Internet Monitoring
             checkInternetStatus();
             window.addEventListener('online', checkInternetStatus);
             window.addEventListener('offline', checkInternetStatus);
         }
 
-        // ✅ NEW: Internet status checker
         function checkInternetStatus() {
             if (navigator.onLine) {
                 updateStatusDot(internetDot, 'ok', 'Online');
@@ -1598,7 +1586,6 @@
             }
         }
 
-        // ✅ NEW: Helper to update status dot & text
         function updateStatusDot(element, status, message = '') {
             let color;
             switch (status) {
@@ -1615,7 +1602,6 @@
             }
         }
 
-        // Mode & UI helpers
         function updateModeIndicator() {
             if (isCloudMode && SHEET_ID && SCRIPT_URL) {
                 modeIndicator.textContent = "Cloud Mode";
@@ -1834,62 +1820,44 @@
 
         function setupEventListeners() {
             attachSidebarEventListeners();
-
             submitPasswordBtn.onclick = checkPassword;
             cancelPasswordBtn.onclick = () => { passwordModal.style.display = 'none'; passwordInput.value = ''; };
-
             searchBtn.onclick = performSearch;
             searchInput.onkeypress = e => { if (e.key === 'Enter') performSearch(); };
-
             verifyBtn.onclick = verifyAttendance;
             clearBtn.onclick = clearSearch;
-
             cameraBtn.onclick = startCamera;
             saveBtn.onclick = saveMember;
             removePhotoBtn.onclick = removeProfilePicture;
-
             capturePhotoBtn.onclick = capturePhoto;
             cancelCameraBtn.onclick = stopCamera;
-
             jobFilter.onchange = updateUI;
-
             testConnectionBtn.onclick = testConnection;
             saveSettingsBtn.onclick = saveSettings;
             loadDataBtn.onclick = loadDataFromCloud;
             clearSettingsBtn.onclick = clearSettings;
             compareSheetBtn.onclick = compareAndSyncSheetStructure;
             manualTestBtn.onclick = manualConnectionTest;
-
             optionCategory.onchange = updateOptionsList;
             addOptionBtn.onclick = addNewOption;
-
             addMenuBtn.onclick = addNewMenu;
             addSubmenuBtn.onclick = addNewSubmenu;
-
             syncBtn.onclick = syncDataToCloud;
-
             manageSearchBtn.onclick = performManageSearch;
             manageSearchInput.onkeypress = e => { if (e.key === 'Enter') performManageSearch(); };
-
             allMembersSearchBtn.onclick = performAllMembersSearch;
             allMembersSearchInput.onkeypress = e => { if (e.key === 'Enter') performAllMembersSearch(); };
-
             document.getElementById('generate-report-btn').onclick = generateReport;
-
             document.getElementById('add-user-btn').onclick = addNewUser;
-
             addChapterBtn.onclick = addNewChapter;
             createGroupBtn.onclick = createNewGroup;
-
             createMeetingBtn.onclick = createNewMeeting;
             createMeetingBtn2.onclick = createNewMeeting;
-
             viewAllMembersBtn.onclick = () => {
                 switchContentSection('all-members');
                 document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
                 document.querySelector('.sub-tab[data-section="all-members"]').classList.add('active');
             };
-
             memberDobInput.onclick = () => {
                 const rect = memberDobInput.getBoundingClientRect();
                 birthdayCalendar.style.display = 'block';
@@ -2137,12 +2105,10 @@
             searchResults.style.display = 'block';
         }
 
-        // Helper to select by ID (for onclick binding)
         window.selectMemberById = function(id) {
             const member = members.find(m => m.id === id);
             if (member) selectMember(member);
         }
-
         window.verifyFromSearch = async function(id) {
             const member = members.find(m => m.id === id);
             if (member) {
@@ -2268,7 +2234,6 @@
                     await saveMemberToCloud(data);
                     showAlert(`${name} added`, 'success');
                 }
-                // reset
                 [memberNameInput, memberIdInput, memberPhoneInput, memberDobInput].forEach(el => el.value = '');
                 [jobSelect, hometownSelect, tribeSelect, chapterSelect, groupSelect].forEach(el => el.value = '');
                 capturePreview.innerHTML = '<span>No profile picture</span>';
@@ -2421,7 +2386,6 @@
                 : '<p>No members added yet.</p>';
         }
 
-        // Edit by ID helpers
         window.editMemberById = function(id) {
             const member = members.find(m => m.id === id);
             if (member) {
@@ -2432,7 +2396,6 @@
                 switchContentSection('add-member');
                 document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
                 document.querySelector('.sub-tab[data-section="add-member"]').classList.add('active');
-
                 memberNameInput.value = member.name;
                 memberIdInput.value = member.idNumber;
                 memberPhoneInput.value = member.phone || '';
@@ -2556,7 +2519,6 @@
                 const md = new Date(m.date); md.setHours(0,0,0,0);
                 return md.getTime() < today.getTime();
             });
-
             const renderMeetingsList = (list, container, emptyMsg) => {
                 container.innerHTML = list.length 
                     ? list.map(m => `
@@ -2575,11 +2537,9 @@
                     `).join('')
                     : `<p>${emptyMsg}</p>`;
             };
-
             renderMeetingsList(active, activeMeetingsList, 'No active meetings today.');
             renderMeetingsList(upcoming, upcomingMeetingsList, 'No upcoming meetings.');
             renderMeetingsList(past, pastMeetingsList, 'No past meetings.');
-
             document.querySelectorAll('.view-meeting-btn').forEach(btn => {
                 btn.onclick = () => viewMeeting(btn.getAttribute('data-id'));
             });
@@ -2607,7 +2567,6 @@
             birthdaysThisWeekEl.textContent = upcoming.length;
             birthdaysThisMonthEl.textContent = thisMonth.length;
             birthdaysNextMonthEl.textContent = nextMonth.length;
-
             const renderBirthdayList = (items, container, emptyMsg) => {
                 container.innerHTML = items.length 
                     ? items.map(i => {
@@ -2629,7 +2588,6 @@
                     }).join('')
                     : `<p>${emptyMsg}</p>`;
             };
-
             renderBirthdayList(upcoming, upcomingBirthdaysList, 'No birthdays in next 7 days.');
             renderBirthdayList(thisMonth, monthBirthdaysList, 'No birthdays this month.');
         }
@@ -2764,47 +2722,19 @@
             }
         }
 
-        // ========== CLOUD SYNC FUNCTIONS (ENHANCED) ==========
-        function isValidSheetId(id) {
-            return id && /^[a-zA-Z0-9\-_]+$/.test(id) && id.length > 10;
-        }
+        // ========== ✅ FIXED CLOUD SYNC FUNCTIONS (CORS-SAFE) ==========
 
-        function isValidScriptUrl(url) {
-            try {
-                const u = new URL(url);
-                return u.hostname.includes('script.google.com') || u.hostname.includes('googleusercontent.com');
-            } catch { 
-                return false; 
-            }
-        }
-
-        // Polyfill AbortSignal.timeout
-        if (!AbortSignal.timeout) {
-            AbortSignal.timeout = function(ms) {
-                const ctrl = new AbortController();
-                setTimeout(() => ctrl.abort(new Error('Timeout')), ms);
-                return ctrl.signal;
-            };
-        }
-
-        async function testScriptConnection(url, sheetId, timeout = 8000) {
+        // ✅ Test connection (GET only)
+        async function testScriptConnection(url, sheetId) {
             const testUrl = `${url}?action=test&sheetId=${encodeURIComponent(sheetId || 'test')}&t=${Date.now()}`;
-            const res = await fetch(testUrl, { signal: AbortSignal.timeout(timeout) });
+            const res = await fetch(testUrl);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const data = await res.json();
             if (!data.success) throw new Error(data.error || 'Test failed');
             return true;
         }
 
-        async function testSheetAccess(url, sheetId, timeout = 10000) {
-            const testUrl = `${url}?action=getMembers&sheetId=${encodeURIComponent(sheetId)}&t=${Date.now()}`;
-            const res = await fetch(testUrl, { signal: AbortSignal.timeout(timeout) });
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            const data = await res.json();
-            if (!data.success) throw new Error(data.error || 'Sheet access failed');
-            return true;
-        }
-
+        // ✅ Compare & Sync Structure (GET — unchanged)
         async function compareAndSyncSheetStructure() {
             if (!SHEET_ID || !SCRIPT_URL) return showAlert('Configure settings first', 'error');
             updateStatusDot(backendDot, 'pending', 'Testing…');
@@ -2832,24 +2762,30 @@
             }
         }
 
+        // ✅ Sync All (POST form-encoded — NO CORS)
         async function syncDataToCloud() {
             if (!SHEET_ID || !SCRIPT_URL) return showAlert('Configure settings first', 'error');
             updateSyncStatus('syncing', 'Syncing to cloud…');
             try {
                 await testScriptConnection(SCRIPT_URL, SHEET_ID);
-                const payload = { 
-                    action: 'syncAll', 
-                    sheetId: SHEET_ID, 
-                    members: members, 
-                    attendance: attendance 
-                };
-                const res = await fetch(SCRIPT_URL, { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify(payload) 
+
+                const formData = new URLSearchParams();
+                formData.append('action', 'syncAll');
+                formData.append('sheetId', SHEET_ID);
+                formData.append('members', JSON.stringify(members));
+                formData.append('attendance', JSON.stringify(attendance));
+                formData.append('version', '1.0');
+
+                const res = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
                 });
+
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data = await res.json();
                 if (!data.success) throw new Error(data.error || 'Sync failed');
+
                 showAlert(`✅ Synced ${members.length} members`, 'success');
                 isCloudMode = true;
                 localStorage.setItem('asantemanCloudMode', 'true');
@@ -2866,6 +2802,7 @@
             }
         }
 
+        // ✅ Load Data from Cloud (GET — unchanged)
         async function loadDataFromCloud() {
             if (!SHEET_ID || !SCRIPT_URL) return showAlert('Configure settings first', 'error');
             updateSyncStatus('syncing', 'Loading from cloud…');
@@ -2898,66 +2835,51 @@
         async function testConnection() {
             if (!saveSettings()) return showAlert('Save settings first', 'error');
             if (!SHEET_ID || !SCRIPT_URL) return showAlert('Enter Sheet ID & Script URL', 'error');
-            if (!isValidSheetId(SHEET_ID)) return showAlert('Invalid Sheet ID format', 'error');
-            if (!isValidScriptUrl(SCRIPT_URL)) return showAlert('Invalid Script URL', 'error');
 
-            // Reset statuses
             updateStatusDot(backendDot, 'pending', 'Testing…');
             updateStatusDot(sheetDot, 'pending', 'Testing…');
-
             try {
-                // Test backend first
                 await testScriptConnection(SCRIPT_URL, SHEET_ID);
                 updateStatusDot(backendDot, 'ok', 'Connected');
 
-                // Then test sheet access
-                await testSheetAccess(SCRIPT_URL, SHEET_ID);
+                const testUrl = `${SCRIPT_URL}?action=getMembers&sheetId=${encodeURIComponent(SHEET_ID)}&t=${Date.now()}`;
+                const res = await fetch(testUrl);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Sheet access failed');
                 updateStatusDot(sheetDot, 'ok', 'Accessible');
 
-                // Success
                 isCloudMode = true;
                 localStorage.setItem('asantemanCloudMode', 'true');
                 updateModeIndicator();
                 updateDatabaseStatus(`Connected to Cloud Sheet: ${SHEET_ID.substring(0,12)}...`);
                 updateSyncStatus('success', '✅ Test passed');
                 showAlert('✅ Connection verified', 'success');
-
             } catch (err) {
-                let backendErr = false, sheetErr = false;
-                const msg = err.message || 'Unknown error';
-
-                if (msg.includes('network') || msg.includes('Failed to fetch') || msg.includes('load')) {
-                    backendErr = true; sheetErr = true;
-                } else if (msg.includes('timeout')) {
-                    backendErr = true; sheetErr = true;
-                } else if (msg.includes('HTTP 404') || msg.includes('HTTP 401') || msg.includes('HTTP 403')) {
-                    backendErr = true; sheetErr = true;
-                } else if (msg.includes('Sheet')) {
-                    updateStatusDot(backendDot, 'ok', 'OK');
-                    sheetErr = true;
-                } else {
-                    backendErr = true;
-                }
-
-                if (backendErr) updateStatusDot(backendDot, 'error', 'Error');
-                if (sheetErr) updateStatusDot(sheetDot, 'error', 'Error');
-
+                updateStatusDot(backendDot, 'error', 'Error');
+                updateStatusDot(sheetDot, 'error', 'Error');
                 isCloudMode = false;
                 localStorage.setItem('asantemanCloudMode', 'false');
                 updateModeIndicator();
                 updateDatabaseStatus('Cloud mode disabled due to connection issues');
                 updateSyncStatus('error', '❌ Connection test failed');
-                showAlert('❌ Test failed: ' + msg, 'error');
+                showAlert('❌ Test failed: ' + err.message, 'error');
             }
         }
 
-        // Cloud CRUD (enhanced)
+        // ✅ Cloud CRUD — CORS-safe form POST
+
         async function saveMemberToCloud(member) {
             if (!isCloudMode || !SHEET_ID || !SCRIPT_URL) return;
+            const formData = new URLSearchParams();
+            formData.append('action', 'saveMember');
+            formData.append('sheetId', SHEET_ID);
+            formData.append('member', JSON.stringify(member));
+
             const res = await fetch(SCRIPT_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'saveMember', sheetId: SHEET_ID, member })
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
             });
             const data = await res.json();
             if (!data.success) throw new Error(data.error || 'Cloud save failed');
@@ -2965,10 +2887,15 @@
 
         async function updateMemberOnCloud(member) {
             if (!isCloudMode || !SHEET_ID || !SCRIPT_URL) return;
+            const formData = new URLSearchParams();
+            formData.append('action', 'updateMember');
+            formData.append('sheetId', SHEET_ID);
+            formData.append('member', JSON.stringify(member));
+
             const res = await fetch(SCRIPT_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'updateMember', sheetId: SHEET_ID, member })
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
             });
             const data = await res.json();
             if (!data.success) throw new Error(data.error || 'Cloud update failed');
@@ -2976,10 +2903,15 @@
 
         async function deleteMemberFromCloud(memberId) {
             if (!isCloudMode || !SHEET_ID || !SCRIPT_URL) return;
+            const formData = new URLSearchParams();
+            formData.append('action', 'deleteMember');
+            formData.append('sheetId', SHEET_ID);
+            formData.append('memberId', memberId);
+
             const res = await fetch(SCRIPT_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'deleteMember', sheetId: SHEET_ID, memberId })
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
             });
             const data = await res.json();
             if (!data.success) throw new Error(data.error || 'Cloud delete failed');
@@ -2987,10 +2919,15 @@
 
         async function saveAttendanceToCloud(rec) {
             if (!isCloudMode || !SHEET_ID || !SCRIPT_URL) return;
+            const formData = new URLSearchParams();
+            formData.append('action', 'saveAttendance');
+            formData.append('sheetId', SHEET_ID);
+            formData.append('attendance', JSON.stringify(rec));
+
             const res = await fetch(SCRIPT_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'saveAttendance', sheetId: SHEET_ID, attendance: rec })
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
             });
             const data = await res.json();
             if (!data.success) throw new Error(data.error || 'Cloud attendance save failed');
@@ -3031,7 +2968,6 @@
                 .catch(e => alert(`Error: ${e.message}`));
         }
 
-        // Storage
         function saveAllToLocalStorage() {
             const keys = ['Members', 'Attendance', 'Jobs', 'Hometowns', 'Tribes', 'Departments', 'Positions', 'Chapters', 'Groups', 'LastSync'];
             const values = [members, attendance, availableJobs, availableHometowns, availableTribes, availableDepartments, availablePositions, availableChapters, availableGroups, Date.now().toString()];
@@ -3144,17 +3080,6 @@
 
         // Init
         renderUsersList();
-
-        // Debug helpers
-        window.debugConnection = () => {
-            console.log('Settings:', { SHEET_ID, SCRIPT_URL, isCloudMode });
-            if (SCRIPT_URL) {
-                fetch(SCRIPT_URL)
-                    .then(r => console.log('Direct test:', r.status, r.ok))
-                    .catch(e => console.error('Direct test error:', e));
-            }
-        };
-        window.manualConnectionTest = manualConnectionTest;
 
         // Menu CRUD
         function addNewMenu() {
