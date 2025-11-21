@@ -483,6 +483,7 @@
             gap: 10px;
             margin: 20px 0;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -521,6 +522,16 @@
         .btn-warning {
             background: var(--warning);
             color: #212529;
+        }
+
+        .btn-info {
+            background: var(--info);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 10px 15px;
+            font-size: 0.9rem;
         }
 
         /* Form Elements */
@@ -724,6 +735,50 @@
             border-color: #f5c6cb;
         }
 
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-color: #bee5eb;
+        }
+
+        /* Connection Status */
+        .connection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .conn-card {
+            padding: 12px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+        }
+
+        .conn-label {
+            font-size: 0.8rem;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .conn-value {
+            font-weight: bold;
+            margin-top: 4px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
         /* Responsive Adjustments */
         @media (max-width: 380px) {
             .dashboard-cards, .quick-actions {
@@ -738,6 +793,36 @@
                 width: 35px;
                 height: 35px;
             }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Settings specific styles */
+        .settings-section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .settings-group {
+            margin-bottom: 25px;
+        }
+
+        .settings-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 8px;
         }
     </style>
 </head>
@@ -758,8 +843,8 @@
                 </div>
             </div>
             <div class="header-right">
-                <div class="header-icon">
-                    <i class="fas fa-bell"></i>
+                <div class="header-icon" id="settings-btn">
+                    <i class="fas fa-cog"></i>
                 </div>
                 <div class="header-icon" id="sync-btn">
                     <i class="fas fa-sync-alt"></i>
@@ -781,28 +866,28 @@
                         <div class="card-icon">
                             <i class="fas fa-users"></i>
                         </div>
-                        <div class="card-value" id="total-members-count">142</div>
+                        <div class="card-value" id="total-members-count">0</div>
                         <div class="card-label">Total Members</div>
                     </div>
                     <div class="dashboard-card">
                         <div class="card-icon" style="background: var(--success);">
                             <i class="fas fa-user-check"></i>
                         </div>
-                        <div class="card-value" id="present-today-count">87</div>
+                        <div class="card-value" id="present-today-count">0</div>
                         <div class="card-label">Present Today</div>
                     </div>
                     <div class="dashboard-card">
                         <div class="card-icon" style="background: var(--info);">
                             <i class="fas fa-calendar-alt"></i>
                         </div>
-                        <div class="card-value" id="active-meetings-count">2</div>
+                        <div class="card-value" id="active-meetings-count">0</div>
                         <div class="card-label">Active Meetings</div>
                     </div>
                     <div class="dashboard-card">
                         <div class="card-icon" style="background: var(--warning);">
                             <i class="fas fa-birthday-cake"></i>
                         </div>
-                        <div class="card-value" id="upcoming-birthdays-count">5</div>
+                        <div class="card-value" id="upcoming-birthdays-count">0</div>
                         <div class="card-label">Upcoming Birthdays</div>
                     </div>
                 </div>
@@ -837,7 +922,7 @@
                 <div class="recent-activity">
                     <div class="activity-header">
                         <div class="activity-title">Recent Activity</div>
-                        <div class="view-all">View All</div>
+                        <div class="view-all" id="view-all-activity">View All</div>
                     </div>
                     <div class="activity-list" id="recent-activity-list">
                         <!-- Recent activity items will be populated here -->
@@ -897,6 +982,24 @@
                         <label class="form-label" for="member-phone">Phone Number</label>
                         <input type="tel" class="form-control" id="member-phone" placeholder="Enter phone number">
                     </div>
+                    <div class="form-group">
+                        <label class="form-label" for="member-job">Job Title</label>
+                        <select class="form-control" id="member-job">
+                            <option value="">Select Job</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="member-hometown">Hometown</label>
+                        <select class="form-control" id="member-hometown">
+                            <option value="">Select Hometown</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="member-tribe">Tribe</label>
+                        <select class="form-control" id="member-tribe">
+                            <option value="">Select Tribe</option>
+                        </select>
+                    </div>
                     
                     <div class="controls">
                         <button class="btn btn-primary" id="camera-btn">
@@ -955,6 +1058,88 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Settings Section -->
+            <div class="content-section" id="settings-section">
+                <div class="section-header">
+                    <span>System Settings</span>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-group">
+                        <div class="settings-title">Cloud Configuration</div>
+                        <div class="form-group">
+                            <label class="form-label" for="script-url">Google Apps Script URL</label>
+                            <input type="text" class="form-control" id="script-url" placeholder="Enter your Google Apps Script URL">
+                            <small style="display: block; margin-top: 5px; color: var(--text-secondary);">This is the URL of your deployed Google Apps Script web app</small>
+                        </div>
+                        
+                        <div class="connection-grid">
+                            <div class="conn-card">
+                                <div class="conn-label">🌐 Internet</div>
+                                <div class="conn-value">
+                                    <span class="status-dot" id="internet-dot" style="background: #ccc;"></span>
+                                    <span id="internet-status">Checking…</span>
+                                </div>
+                            </div>
+                            <div class="conn-card">
+                                <div class="conn-label">⚙️ Backend</div>
+                                <div class="conn-value">
+                                    <span class="status-dot" id="backend-dot" style="background: #ccc;"></span>
+                                    <span id="backend-status">Not tested</span>
+                                </div>
+                            </div>
+                            <div class="conn-card">
+                                <div class="conn-label">📊 Sheet</div>
+                                <div class="conn-value">
+                                    <span class="status-dot" id="sheet-dot" style="background: #ccc;"></span>
+                                    <span id="sheet-status">Not tested</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="controls">
+                            <button class="btn btn-primary" id="test-connection-btn">
+                                <i class="fas fa-plug"></i> Test Connection
+                            </button>
+                            <button class="btn btn-success" id="save-settings-btn">
+                                <i class="fas fa-save"></i> Save Settings
+                            </button>
+                            <button class="btn btn-info" id="load-data-btn">
+                                <i class="fas fa-download"></i> Load Data
+                            </button>
+                            <button class="btn btn-warning" id="clear-settings-btn">
+                                <i class="fas fa-trash"></i> Clear Settings
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <div class="settings-title">Database Status</div>
+                        <div id="database-status">
+                            <p>No data loaded yet. Configure your Google Sheet and click "Load Data".</p>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <div class="settings-title">System Information</div>
+                        <div class="form-group">
+                            <div class="conn-card">
+                                <div class="conn-label">Total Members</div>
+                                <div class="conn-value" id="settings-members-count">0</div>
+                            </div>
+                            <div class="conn-card">
+                                <div class="conn-label">Today's Attendance</div>
+                                <div class="conn-value" id="settings-attendance-count">0</div>
+                            </div>
+                            <div class="conn-card">
+                                <div class="conn-label">Active Meetings</div>
+                                <div class="conn-value" id="settings-meetings-count">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <!-- Bottom Navigation -->
@@ -995,7 +1180,7 @@
         <div class="modal" id="password-modal">
             <div class="modal-content">
                 <h2>Enter Password</h2>
-                <p>Please enter the password to access admin features.</p>
+                <p>Please enter the password to access the Settings.</p>
                 <div class="form-group">
                     <input type="password" class="form-control" id="password-input" placeholder="Enter password">
                 </div>
@@ -1006,21 +1191,76 @@
             </div>
         </div>
 
+        <div class="modal" id="confirm-modal">
+            <div class="modal-content">
+                <h2>Confirm Action</h2>
+                <p id="confirm-message">Are you sure you want to perform this action?</p>
+                <div class="controls">
+                    <button class="btn btn-success" id="confirm-yes-btn">Yes</button>
+                    <button class="btn btn-danger" id="confirm-no-btn">No</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Sync Status Indicator -->
         <div class="sync-status" id="sync-status">Sync: Ready</div>
     </div>
 
     <script>
-        // Initialize the app
+        // ========== GLOBAL VARIABLES (FULL CORE LOGIC) ==========
+        let members = [];
+        let attendance = [];
+        let meetings = [];
+        let currentSelectedMember = null;
+        let currentCapture = null;
+        let currentEditingMember = null;
+        let availableJobs = ['Farmer', 'Teacher', 'Trader', 'Driver', 'Nurse'];
+        let availableHometowns = ['Accra', 'Kumasi', 'Cape Coast', 'Takoradi', 'Tamale'];
+        let availableTribes = ['Akan', 'Ewe', 'Ga', 'Dagomba', 'Fante'];
+        let availableDepartments = ['General', 'Education', 'Commerce', 'Health', 'Agriculture'];
+        let availablePositions = ['Member', 'Leader', 'Secretary', 'Treasurer', 'Organizer'];
+        let availableChapters = [];
+        let availableGroups = [];
+        let cameraStream = null;
+        let settingsPassword = "admin123";
+        let users = [
+            { username: 'admin', password: 'admin123', role: 'admin' },
+            { username: 'user', password: 'user123', role: 'user' }
+        ];
+        let SCRIPT_URL = '';
+        let SHEET_ID = '';
+        let isCloudMode = false;
+
+        // ========== DOM ELEMENTS ==========
+        const syncStatus = document.getElementById('sync-status');
+        const modeIndicator = document.getElementById('mode-indicator');
+        const passwordModal = document.getElementById('password-modal');
+        const passwordInput = document.getElementById('password-input');
+        const submitPasswordBtn = document.getElementById('submit-password-btn');
+        const cancelPasswordBtn = document.getElementById('cancel-password-btn');
+        const confirmModal = document.getElementById('confirm-modal');
+        const confirmMessage = document.getElementById('confirm-message');
+        const confirmYesBtn = document.getElementById('confirm-yes-btn');
+        const confirmNoBtn = document.getElementById('confirm-no-btn');
+
+        // ========== INITIALIZATION ==========
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
         });
 
         function initializeApp() {
+            loadSettings();
             setupEventListeners();
+            loadDataFromLocalStorage();
             updateDashboard();
             updateRecentActivity();
             updateCurrentDate();
+            updateDropdowns();
+            checkInternetStatus();
+            
+            // Setup internet monitoring
+            window.addEventListener('online', checkInternetStatus);
+            window.addEventListener('offline', checkInternetStatus);
         }
 
         function setupEventListeners() {
@@ -1029,6 +1269,13 @@
             navItems.forEach(item => {
                 item.addEventListener('click', function() {
                     const sectionId = this.getAttribute('data-section');
+                    
+                    // Check if settings access requires password
+                    if (sectionId === 'settings-section') {
+                        passwordModal.style.display = 'flex';
+                        return;
+                    }
+                    
                     switchContentSection(sectionId);
                     
                     // Update active nav item
@@ -1051,11 +1298,17 @@
             document.getElementById('view-attendance-btn').addEventListener('click', function() {
                 switchContentSection('view-attendance-section');
                 updateNavActive('view-attendance-section');
+                renderAttendanceList();
             });
 
             document.getElementById('meeting-management-btn').addEventListener('click', function() {
                 switchContentSection('meetings-section');
                 updateNavActive('meetings-section');
+                renderMeetings();
+            });
+
+            document.getElementById('settings-btn').addEventListener('click', function() {
+                passwordModal.style.display = 'flex';
             });
 
             // Search functionality
@@ -1088,16 +1341,45 @@
             });
 
             // Sync button
-            document.getElementById('sync-btn').addEventListener('click', syncData);
+            document.getElementById('sync-btn').addEventListener('click', syncDataToCloud);
+
+            // View all activity
+            document.getElementById('view-all-activity').addEventListener('click', function() {
+                switchContentSection('view-attendance-section');
+                updateNavActive('view-attendance-section');
+            });
+
+            // Settings buttons
+            document.getElementById('test-connection-btn').addEventListener('click', testConnection);
+            document.getElementById('save-settings-btn').addEventListener('click', saveSettings);
+            document.getElementById('load-data-btn').addEventListener('click', loadDataFromCloud);
+            document.getElementById('clear-settings-btn').addEventListener('click', clearSettings);
+
+            // Password modal
+            submitPasswordBtn.addEventListener('click', checkPassword);
+            cancelPasswordBtn.addEventListener('click', () => {
+                passwordModal.style.display = 'none';
+                passwordInput.value = '';
+            });
+
+            // Confirm modal
+            confirmYesBtn.addEventListener('click', confirmAction);
+            confirmNoBtn.addEventListener('click', () => {
+                confirmModal.style.display = 'none';
+            });
         }
 
+        // ========== CORE APPLICATION FUNCTIONS ==========
+
         function switchContentSection(sectionId) {
-            // Hide all sections
             const sections = document.querySelectorAll('.content-section');
             sections.forEach(section => section.classList.remove('active'));
-            
-            // Show the selected section
             document.getElementById(sectionId).classList.add('active');
+            
+            // Update settings display when switching to settings
+            if (sectionId === 'settings-section') {
+                updateSettingsDisplay();
+            }
         }
 
         function updateNavActive(sectionId) {
@@ -1112,38 +1394,84 @@
         }
 
         function updateDashboard() {
-            // In a real app, this would fetch data from an API or local storage
-            // For demo purposes, we're using static values
-            document.getElementById('total-members-count').textContent = '142';
-            document.getElementById('present-today-count').textContent = '87';
-            document.getElementById('active-meetings-count').textContent = '2';
-            document.getElementById('upcoming-birthdays-count').textContent = '5';
+            const today = new Date();
+            const todayRecords = attendance.filter(r => {
+                const rd = new Date(r.timestamp);
+                return rd.getFullYear() === today.getFullYear() &&
+                    rd.getMonth() === today.getMonth() &&
+                    rd.getDate() === today.getDate();
+            });
+
+            document.getElementById('total-members-count').textContent = members.length;
+            document.getElementById('present-today-count').textContent = todayRecords.length;
+            
+            const activeMeetings = meetings.filter(m => {
+                const md = new Date(m.date);
+                return md.getFullYear() === today.getFullYear() &&
+                    md.getMonth() === today.getMonth() &&
+                    md.getDate() === today.getDate();
+            });
+            document.getElementById('active-meetings-count').textContent = activeMeetings.length;
+            
+            const upcomingBdays = getUpcomingBirthdays(7).length;
+            document.getElementById('upcoming-birthdays-count').textContent = upcomingBdays;
+        }
+
+        function updateSettingsDisplay() {
+            document.getElementById('settings-members-count').textContent = members.length;
+            
+            const today = new Date();
+            const todayRecords = attendance.filter(r => {
+                const rd = new Date(r.timestamp);
+                return rd.getFullYear() === today.getFullYear() &&
+                    rd.getMonth() === today.getMonth() &&
+                    rd.getDate() === today.getDate();
+            });
+            document.getElementById('settings-attendance-count').textContent = todayRecords.length;
+            
+            const activeMeetings = meetings.filter(m => {
+                const md = new Date(m.date);
+                return md.getFullYear() === today.getFullYear() &&
+                    md.getMonth() === today.getMonth() &&
+                    md.getDate() === today.getDate();
+            });
+            document.getElementById('settings-meetings-count').textContent = activeMeetings.length;
+            
+            updateDatabaseStatus();
         }
 
         function updateRecentActivity() {
             const activityList = document.getElementById('recent-activity-list');
+            const today = new Date();
             
-            // Sample activity data
-            const activities = [
-                { name: 'Kwame Asante', time: '08:30 AM', status: 'present' },
-                { name: 'Ama Serwaa', time: '09:15 AM', status: 'present' },
-                { name: 'Kofi Mensah', time: '10:05 AM', status: 'present' },
-                { name: 'Yaw Boateng', time: 'Yesterday', status: 'present' },
-                { name: 'Esi Coleman', time: 'Yesterday', status: 'present' }
-            ];
+            const todayActivities = attendance.filter(r => {
+                const rd = new Date(r.timestamp);
+                return rd.getFullYear() === today.getFullYear() &&
+                    rd.getMonth() === today.getMonth() &&
+                    rd.getDate() === today.getDate();
+            }).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 5);
             
             activityList.innerHTML = '';
             
-            activities.forEach(activity => {
-                const initials = activity.name.split(' ').map(n => n[0]).join('');
+            if (todayActivities.length === 0) {
+                activityList.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">No recent activity</div>';
+                return;
+            }
+            
+            todayActivities.forEach(activity => {
+                const member = members.find(m => m.id === activity.memberId);
+                if (!member) return;
+                
+                const initials = member.name.split(' ').map(n => n[0]).join('');
+                const time = new Date(activity.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 
                 const activityItem = document.createElement('div');
                 activityItem.className = 'activity-item';
                 activityItem.innerHTML = `
                     <div class="activity-avatar">${initials}</div>
                     <div class="activity-details">
-                        <div class="activity-name">${activity.name}</div>
-                        <div class="activity-time">Verified at ${activity.time}</div>
+                        <div class="activity-name">${member.name}</div>
+                        <div class="activity-time">Verified at ${time}</div>
                     </div>
                     <div class="activity-status status-present"></div>
                 `;
@@ -1168,66 +1496,108 @@
                 return;
             }
             
-            // In a real app, this would search through your member database
-            // For demo, we'll simulate a search result
-            const mockMember = {
-                id: '1',
-                name: 'Kwame Asante',
-                idNumber: 'ASM001',
-                phone: '0241234567',
-                job: 'Teacher',
-                hometown: 'Kumasi',
-                tribe: 'Akan'
-            };
+            const results = members.filter(m => 
+                m.name.toLowerCase().includes(query) || 
+                (m.phone && m.phone.includes(query)) ||
+                (m.idNumber && m.idNumber.toLowerCase().includes(query))
+            );
             
-            if (query.includes('kwame') || query.includes('asante') || query.includes('0241234567')) {
-                displayMemberProfile(mockMember);
+            if (results.length > 0) {
+                selectMember(results[0]);
                 showAlert('Member found!', 'success');
             } else {
                 showAlert('No member found with that search term', 'error');
             }
         }
 
+        function selectMember(member) {
+            currentSelectedMember = member;
+            const searchInput = document.getElementById('search-input');
+            searchInput.value = `${member.name} (${member.phone || 'No phone'})`;
+            displayMemberProfile(member);
+            
+            const now = new Date();
+            const isVerified = attendance.some(r => {
+                const rd = new Date(r.timestamp);
+                return r.memberId === member.id &&
+                    rd.getFullYear() === now.getFullYear() &&
+                    rd.getMonth() === now.getMonth() &&
+                    rd.getDate() === now.getDate();
+            });
+            
+            const verificationStatus = document.getElementById('verification-status');
+            verificationStatus.textContent = isVerified 
+                ? 'ALREADY VERIFIED - Attendance already marked today'
+                : 'READY FOR VERIFICATION - Confirm identity and verify';
+            verificationStatus.className = `verification-status ${isVerified ? 'verified' : 'not-verified'}`;
+        }
+
         function displayMemberProfile(member) {
             const profileDisplay = document.getElementById('profile-display');
-            const verificationStatus = document.getElementById('verification-status');
-            
             const initials = member.name.split(' ').map(n => n[0]).join('');
             
+            const avatar = member.image 
+                ? `<img src="${member.image}" alt="${member.name}">`
+                : initials;
+            
             profileDisplay.innerHTML = `
-                <div class="profile-avatar">${initials}</div>
+                <div class="profile-avatar">${avatar}</div>
                 <div class="profile-name">${member.name}</div>
                 <div class="profile-details">
-                    <div>ID: ${member.idNumber} • ${member.job}</div>
-                    <div>Phone: ${member.phone}</div>
-                    <div>Hometown: ${member.hometown} • Tribe: ${member.tribe}</div>
+                    <div>ID: ${member.idNumber} • ${member.job || 'No job'}</div>
+                    <div>Phone: ${member.phone || 'Not provided'}</div>
+                    ${member.hometown ? `<div>Hometown: ${member.hometown}</div>` : ''}
+                    ${member.tribe ? `<div>Tribe: ${member.tribe}</div>` : ''}
                 </div>
                 <div class="profile-id">Click to view full profile</div>
             `;
-            
-            verificationStatus.textContent = 'READY FOR VERIFICATION - Confirm identity and verify';
-            verificationStatus.className = 'verification-status not-verified';
         }
 
         function verifyAttendance() {
-            const profileDisplay = document.getElementById('profile-display');
-            
-            if (profileDisplay.innerHTML.includes('No profile selected')) {
+            if (!currentSelectedMember) {
                 showAlert('Please search for a member first', 'error');
                 return;
+            }
+            
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const alreadyVerified = attendance.some(r => {
+                const rd = new Date(r.timestamp);
+                return r.memberId === currentSelectedMember.id &&
+                    rd.getFullYear() === today.getFullYear() &&
+                    rd.getMonth() === today.getMonth() &&
+                    rd.getDate() === today.getDate();
+            });
+            
+            if (alreadyVerified) {
+                showAlert('Member already verified today', 'error');
+                return;
+            }
+            
+            const record = {
+                memberId: currentSelectedMember.id,
+                memberName: currentSelectedMember.name,
+                timestamp: now.toISOString(),
+                verificationTime: now.toLocaleTimeString()
+            };
+            
+            attendance.push(record);
+            saveAllToLocalStorage();
+            
+            // Try cloud sync if enabled
+            if (isCloudMode && SCRIPT_URL) {
+                saveAttendanceToCloud(record).catch(err => {
+                    console.error('Cloud sync failed:', err);
+                });
             }
             
             const verificationStatus = document.getElementById('verification-status');
             verificationStatus.textContent = 'VERIFICATION SUCCESSFUL - Attendance marked';
             verificationStatus.className = 'verification-status verified';
             
-            showAlert('Attendance verified successfully!', 'success');
+            showAlert(`Attendance verified for ${currentSelectedMember.name}`, 'success');
             
-            // Update dashboard
-            const presentCount = document.getElementById('present-today-count');
-            presentCount.textContent = (parseInt(presentCount.textContent) + 1).toString();
-            
-            // Add to recent activity
+            updateDashboard();
             updateRecentActivity();
         }
 
@@ -1236,29 +1606,77 @@
             document.getElementById('profile-display').innerHTML = '<div class="no-profile">Search for a member to verify attendance</div>';
             document.getElementById('verification-status').textContent = 'NOT VERIFIED - Search for a member';
             document.getElementById('verification-status').className = 'verification-status not-verified';
+            currentSelectedMember = null;
         }
 
         function saveMember() {
             const name = document.getElementById('member-name').value.trim();
             const id = document.getElementById('member-id').value.trim();
             const phone = document.getElementById('member-phone').value.trim();
+            const job = document.getElementById('member-job').value;
+            const hometown = document.getElementById('member-hometown').value;
+            const tribe = document.getElementById('member-tribe').value;
             
             if (!name || !id) {
                 showAlert('Please enter name and ID', 'error');
                 return;
             }
             
-            // In a real app, this would save to your database
-            showAlert(`Member ${name} added successfully!`, 'success');
+            if (members.some(m => m.idNumber === id && m.id !== currentEditingMember)) {
+                showAlert('ID number already exists', 'error');
+                return;
+            }
+            
+            const memberData = {
+                id: currentEditingMember || Date.now().toString(),
+                name,
+                idNumber: id,
+                phone,
+                job,
+                hometown,
+                tribe,
+                image: currentCapture,
+                joinDate: new Date().toISOString().split('T')[0],
+                lastUpdated: new Date().toISOString()
+            };
+            
+            if (currentEditingMember) {
+                const index = members.findIndex(m => m.id === currentEditingMember);
+                if (index !== -1) {
+                    members[index] = memberData;
+                }
+                currentEditingMember = null;
+                showAlert(`Member ${name} updated successfully!`, 'success');
+            } else {
+                members.push(memberData);
+                showAlert(`Member ${name} added successfully!`, 'success');
+            }
             
             // Clear form
             document.getElementById('member-name').value = '';
             document.getElementById('member-id').value = '';
             document.getElementById('member-phone').value = '';
+            document.getElementById('member-job').value = '';
+            document.getElementById('member-hometown').value = '';
+            document.getElementById('member-tribe').value = '';
+            currentCapture = null;
             
-            // Update dashboard
-            const totalCount = document.getElementById('total-members-count');
-            totalCount.textContent = (parseInt(totalCount.textContent) + 1).toString();
+            saveAllToLocalStorage();
+            
+            // Try cloud sync if enabled
+            if (isCloudMode && SCRIPT_URL) {
+                if (currentEditingMember) {
+                    updateMemberOnCloud(memberData).catch(err => {
+                        console.error('Cloud sync failed:', err);
+                    });
+                } else {
+                    saveMemberToCloud(memberData).catch(err => {
+                        console.error('Cloud sync failed:', err);
+                    });
+                }
+            }
+            
+            updateDashboard();
         }
 
         function createMeeting() {
@@ -1270,128 +1688,552 @@
                 return;
             }
             
-            // In a real app, this would save to your database
-            showAlert(`Meeting "${title}" created successfully!`, 'success');
+            meetings.push({
+                id: Date.now().toString(),
+                date,
+                title,
+                createdAt: new Date().toISOString(),
+                attendees: []
+            });
+            
+            saveMeetingsToLocalStorage();
+            renderMeetings();
             
             // Clear form
             document.getElementById('meeting-title').value = '';
             document.getElementById('meeting-date').value = '';
             
-            // Update dashboard
-            const meetingCount = document.getElementById('active-meetings-count');
-            meetingCount.textContent = (parseInt(meetingCount.textContent) + 1).toString();
+            showAlert(`Meeting "${title}" created successfully!`, 'success');
+            updateDashboard();
+        }
+
+        function renderAttendanceList() {
+            const attendanceList = document.getElementById('attendance-list');
+            const today = new Date();
+            
+            attendanceList.innerHTML = '';
+            
+            if (members.length === 0) {
+                attendanceList.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">No members available</div>';
+                return;
+            }
+            
+            members.forEach(member => {
+                const isPresent = attendance.some(r => {
+                    const rd = new Date(r.timestamp);
+                    return r.memberId === member.id &&
+                        rd.getFullYear() === today.getFullYear() &&
+                        rd.getMonth() === today.getMonth() &&
+                        rd.getDate() === today.getDate();
+                });
+                
+                const initials = member.name.split(' ').map(n => n[0]).join('');
+                const record = attendance.find(r => {
+                    const rd = new Date(r.timestamp);
+                    return r.memberId === member.id &&
+                        rd.getFullYear() === today.getFullYear() &&
+                        rd.getMonth() === today.getMonth() &&
+                        rd.getDate() === today.getDate();
+                });
+                
+                const timeInfo = record 
+                    ? `Verified: ${record.verificationTime || 'Today'}` 
+                    : 'Not verified today';
+                
+                const attendanceItem = document.createElement('div');
+                attendanceItem.className = `attendance-item ${isPresent ? 'present' : ''}`;
+                attendanceItem.innerHTML = `
+                    <div class="user-info">
+                        <div class="user-avatar">${initials}</div>
+                        <div>
+                            <div>${member.name}</div>
+                            <div class="attendance-time">${timeInfo}</div>
+                        </div>
+                    </div>
+                    <div class="status-indicator ${isPresent ? 'status-present' : 'status-absent'}"></div>
+                `;
+                
+                attendanceList.appendChild(attendanceItem);
+            });
         }
 
         function filterAttendanceList(filter) {
-            // In a real app, this would filter your attendance data
-            // For demo, we'll just show a message
-            const attendanceList = document.getElementById('attendance-list');
+            const attendanceItems = document.querySelectorAll('.attendance-item');
             
-            if (filter === 'all') {
-                attendanceList.innerHTML = `
-                    <div class="attendance-item present">
-                        <div class="user-info">
-                            <div class="user-avatar">KA</div>
-                            <div>
-                                <div>Kwame Asante</div>
-                                <div class="attendance-time">Verified: 08:30 AM</div>
-                            </div>
-                        </div>
-                        <div class="status-indicator status-present"></div>
+            attendanceItems.forEach(item => {
+                const isPresent = item.classList.contains('present');
+                
+                if (filter === 'all') {
+                    item.style.display = 'flex';
+                } else if (filter === 'present' && isPresent) {
+                    item.style.display = 'flex';
+                } else if (filter === 'absent' && !isPresent) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function renderMeetings() {
+            const activeMeetingsList = document.getElementById('active-meetings-list');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const activeMeetings = meetings.filter(m => {
+                const meetingDate = new Date(m.date);
+                meetingDate.setHours(0, 0, 0, 0);
+                return meetingDate.getTime() === today.getTime();
+            });
+            
+            activeMeetingsList.innerHTML = '';
+            
+            if (activeMeetings.length === 0) {
+                activeMeetingsList.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">No active meetings today</div>';
+                return;
+            }
+            
+            activeMeetings.forEach(meeting => {
+                const meetingItem = document.createElement('div');
+                meetingItem.className = 'activity-item';
+                meetingItem.innerHTML = `
+                    <div class="activity-avatar" style="background: var(--info);">
+                        <i class="fas fa-calendar"></i>
                     </div>
-                    <div class="attendance-item present">
-                        <div class="user-info">
-                            <div class="user-avatar">AS</div>
-                            <div>
-                                <div>Ama Serwaa</div>
-                                <div class="attendance-time">Verified: 09:15 AM</div>
-                            </div>
-                        </div>
-                        <div class="status-indicator status-present"></div>
+                    <div class="activity-details">
+                        <div class="activity-name">${meeting.title}</div>
+                        <div class="activity-time">${new Date(meeting.date).toLocaleDateString()}</div>
                     </div>
-                    <div class="attendance-item">
-                        <div class="user-info">
-                            <div class="user-avatar">KM</div>
-                            <div>
-                                <div>Kofi Mensah</div>
-                                <div class="attendance-time">Not verified today</div>
-                            </div>
-                        </div>
-                        <div class="status-indicator status-absent"></div>
-                    </div>
+                    <div class="activity-status" style="background: var(--success);"></div>
                 `;
-            } else if (filter === 'present') {
-                attendanceList.innerHTML = `
-                    <div class="attendance-item present">
-                        <div class="user-info">
-                            <div class="user-avatar">KA</div>
-                            <div>
-                                <div>Kwame Asante</div>
-                                <div class="attendance-time">Verified: 08:30 AM</div>
-                            </div>
-                        </div>
-                        <div class="status-indicator status-present"></div>
-                    </div>
-                    <div class="attendance-item present">
-                        <div class="user-info">
-                            <div class="user-avatar">AS</div>
-                            <div>
-                                <div>Ama Serwaa</div>
-                                <div class="attendance-time">Verified: 09:15 AM</div>
-                            </div>
-                        </div>
-                        <div class="status-indicator status-present"></div>
-                    </div>
-                `;
-            } else if (filter === 'absent') {
-                attendanceList.innerHTML = `
-                    <div class="attendance-item">
-                        <div class="user-info">
-                            <div class="user-avatar">KM</div>
-                            <div>
-                                <div>Kofi Mensah</div>
-                                <div class="attendance-time">Not verified today</div>
-                            </div>
-                        </div>
-                        <div class="status-indicator status-absent"></div>
+                
+                activeMeetingsList.appendChild(meetingItem);
+            });
+        }
+
+        function getUpcomingBirthdays(days = 7) {
+            const today = new Date();
+            return members.filter(m => m.dateOfBirth).map(m => {
+                const [month, day] = m.dateOfBirth.split('/').map(Number);
+                const bday = new Date(today.getFullYear(), month - 1, day);
+                const diffDays = Math.ceil((bday.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+                return { member: m, daysUntil: diffDays };
+            }).filter(i => i.daysUntil >= 0 && i.daysUntil <= days).sort((a, b) => a.daysUntil - b.daysUntil);
+        }
+
+        // ========== CLOUD SYNC FUNCTIONS ==========
+
+        function cleanMember(m) {
+            return {
+                id: String(m.id),
+                name: String(m.name || ''),
+                idNumber: String(m.idNumber || ''),
+                phone: String(m.phone || ''),
+                dateOfBirth: String(m.dateOfBirth || ''),
+                job: String(m.job || ''),
+                hometown: String(m.hometown || ''),
+                tribe: String(m.tribe || ''),
+                chapter: String(m.chapter || ''),
+                group: String(m.group || ''),
+                image: String(m.image || ''),
+                joinDate: m.joinDate ? String(m.joinDate) : new Date().toISOString().split('T')[0],
+                lastUpdated: m.lastUpdated ? String(m.lastUpdated) : new Date().toISOString()
+            };
+        }
+
+        function cleanAttendance(a) {
+            return {
+                memberId: String(a.memberId),
+                memberName: String(a.memberName || ''),
+                timestamp: a.timestamp ? String(a.timestamp) : new Date().toISOString(),
+                verificationTime: a.verificationTime ? String(a.verificationTime) : new Date().toISOString()
+            };
+        }
+
+        async function testScriptConnection(url) {
+            const testUrl = `${url}?action=test&t=${Date.now()}`;
+            const res = await fetch(testUrl);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+            if (!data.success) throw new Error(data.error || 'Test failed');
+            return true;
+        }
+
+        async function syncDataToCloud() {
+            if (!SCRIPT_URL) {
+                showAlert('Configure script URL first in Settings', 'error');
+                return;
+            }
+            
+            updateSyncStatus('syncing', 'Syncing to cloud…');
+            try {
+                await testScriptConnection(SCRIPT_URL);
+
+                const formData = new URLSearchParams();
+                formData.append('action', 'syncAll');
+                formData.append('members', JSON.stringify(members.map(cleanMember)));
+                formData.append('attendance', JSON.stringify(attendance.map(cleanAttendance)));
+                formData.append('version', '1.0');
+
+                const res = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
+                });
+
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Sync failed');
+
+                showAlert(`✅ Synced ${members.length} members`, 'success');
+                isCloudMode = true;
+                localStorage.setItem('asantemanCloudMode', 'true');
+                updateModeIndicator();
+                updateDatabaseStatus(`Connected to backend`);
+                updateSyncStatus('success', 'Sync complete');
+            } catch (err) {
+                console.error('Sync error:', err);
+                showAlert('❌ Sync failed: ' + err.message, 'error');
+                isCloudMode = false;
+                localStorage.setItem('asantemanCloudMode', 'false');
+                updateModeIndicator();
+                updateSyncStatus('error', 'Sync failed');
+            }
+        }
+
+        async function saveMemberToCloud(member) {
+            const formData = new URLSearchParams();
+            formData.append('action', 'saveMember');
+            formData.append('member', JSON.stringify(cleanMember(member)));
+
+            const res = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
+            });
+            const data = await res.json();
+            if (!data.success) throw new Error(data.error || 'Cloud save failed');
+        }
+
+        async function updateMemberOnCloud(member) {
+            const formData = new URLSearchParams();
+            formData.append('action', 'updateMember');
+            formData.append('member', JSON.stringify(cleanMember(member)));
+
+            const res = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
+            });
+            const data = await res.json();
+            if (!data.success) throw new Error(data.error || 'Cloud update failed');
+        }
+
+        async function saveAttendanceToCloud(rec) {
+            const formData = new URLSearchParams();
+            formData.append('action', 'saveAttendance');
+            formData.append('attendance', JSON.stringify(cleanAttendance(rec)));
+
+            const res = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
+            });
+            const data = await res.json();
+            if (!data.success) throw new Error(data.error || 'Cloud attendance save failed');
+        }
+
+        async function loadDataFromCloud() {
+            if (!SCRIPT_URL) {
+                showAlert('Configure script URL first', 'error');
+                return;
+            }
+            
+            updateSyncStatus('syncing', 'Loading from cloud…');
+            try {
+                await testScriptConnection(SCRIPT_URL);
+                const url = `${SCRIPT_URL}?action=getMembers&t=${Date.now()}`;
+                const res = await fetch(url);
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Load failed');
+                
+                members = data.members || [];
+                attendance = data.attendance || [];
+                
+                saveAllToLocalStorage();
+                showAlert(`✅ Loaded ${members.length} members`, 'success');
+                isCloudMode = true;
+                localStorage.setItem('asantemanCloudMode', 'true');
+                updateModeIndicator();
+                updateDatabaseStatus(`Loaded ${members.length} members`);
+                updateSyncStatus('success', 'Load complete');
+                updateDashboard();
+                updateRecentActivity();
+            } catch (err) {
+                console.error('Load error:', err);
+                showAlert('❌ Load failed: ' + err.message, 'error');
+                isCloudMode = false;
+                localStorage.setItem('asantemanCloudMode', 'false');
+                updateModeIndicator();
+                updateSyncStatus('error', 'Load failed');
+            }
+        }
+
+        // ========== SETTINGS FUNCTIONS ==========
+
+        function checkPassword() {
+            if (passwordInput.value === settingsPassword) {
+                passwordModal.style.display = 'none';
+                passwordInput.value = '';
+                switchContentSection('settings-section');
+                updateNavActive('settings-section');
+            } else {
+                showAlert('Incorrect password', 'error');
+                passwordInput.value = '';
+            }
+        }
+
+        function saveSettings() {
+            const url = document.getElementById('script-url').value.trim();
+            SCRIPT_URL = url;
+            
+            try {
+                localStorage.setItem('asantemanScriptUrl', SCRIPT_URL);
+                showAlert('✅ Settings saved', 'success');
+                updateDatabaseStatus(SCRIPT_URL ? `Script URL configured` : 'Local mode');
+                return true;
+            } catch (e) {
+                showAlert('❌ Save error', 'error');
+                return false;
+            }
+        }
+
+        function clearSettings() {
+            showConfirmModal('Clear ALL cloud settings?', function() {
+                localStorage.removeItem('asantemanScriptUrl');
+                localStorage.removeItem('asantemanCloudMode');
+                SCRIPT_URL = '';
+                isCloudMode = false;
+                document.getElementById('script-url').value = '';
+                updateModeIndicator();
+                updateDatabaseStatus('Settings cleared. Running in local mode.');
+                showAlert('✅ Settings cleared', 'success');
+            });
+        }
+
+        async function testConnection() {
+            if (!saveSettings()) return;
+            if (!SCRIPT_URL) {
+                showAlert('Enter Script URL first', 'error');
+                return;
+            }
+
+            updateStatusDot('backend', 'pending', 'Testing…');
+            updateStatusDot('sheet', 'pending', 'Testing…');
+            
+            try {
+                await testScriptConnection(SCRIPT_URL);
+                updateStatusDot('backend', 'ok', 'Connected');
+
+                const testUrl = `${SCRIPT_URL}?action=getMembers&t=${Date.now()}`;
+                const res = await fetch(testUrl);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Data access failed');
+                
+                updateStatusDot('sheet', 'ok', 'Accessible');
+                isCloudMode = true;
+                localStorage.setItem('asantemanCloudMode', 'true');
+                updateModeIndicator();
+                updateDatabaseStatus(`Connected to backend`);
+                updateSyncStatus('success', '✅ Test passed');
+                showAlert('✅ Connection verified', 'success');
+            } catch (err) {
+                updateStatusDot('backend', 'error', 'Error');
+                updateStatusDot('sheet', 'error', 'Error');
+                isCloudMode = false;
+                localStorage.setItem('asantemanCloudMode', 'false');
+                updateModeIndicator();
+                updateDatabaseStatus('Connection failed');
+                updateSyncStatus('error', '❌ Connection test failed');
+                showAlert('❌ Test failed: ' + err.message, 'error');
+            }
+        }
+
+        function updateStatusDot(type, status, message = '') {
+            let color;
+            switch (status) {
+                case 'ok': color = '#28a745'; break;
+                case 'warn': color = '#ffc107'; break;
+                case 'error': color = '#dc3545'; break;
+                case 'pending': color = '#6c757d'; break;
+                default: color = '#ccc';
+            }
+            
+            const dot = document.getElementById(`${type}-dot`);
+            const statusEl = document.getElementById(`${type}-status`);
+            
+            if (dot) dot.style.background = color;
+            if (statusEl && message) statusEl.textContent = message;
+        }
+
+        function checkInternetStatus() {
+            if (navigator.onLine) {
+                updateStatusDot('internet', 'ok', 'Online');
+            } else {
+                updateStatusDot('internet', 'error', 'Offline');
+            }
+        }
+
+        function updateModeIndicator() {
+            if (isCloudMode && SCRIPT_URL) {
+                modeIndicator.textContent = "Cloud";
+                modeIndicator.className = "mode-indicator";
+            } else {
+                modeIndicator.textContent = "Local";
+                modeIndicator.className = "mode-indicator local";
+            }
+        }
+
+        function updateDatabaseStatus(message) {
+            const statusEl = document.getElementById('database-status');
+            if (statusEl) {
+                statusEl.innerHTML = `
+                    <div style="background: #f8f9fa; padding:12px; border-radius:8px; border-left:4px solid #17a2b8;">
+                        <p style="margin:0; font-weight:600;">${message}</p>
+                        ${SCRIPT_URL ? `<p style="margin:5px 0 0 0;font-size:0.85em;"><strong>Script URL:</strong> ${SCRIPT_URL.substring(0,30)}...</p>` : ''}
+                        <p style="margin:5px 0 0 0;font-size:0.85em;"><strong>Mode:</strong> ${isCloudMode ? 'Cloud ✅' : 'Local ⚠️'}</p>
                     </div>
                 `;
             }
         }
 
-        function syncData() {
-            const syncStatus = document.getElementById('sync-status');
-            syncStatus.textContent = 'Sync: Syncing...';
-            syncStatus.className = 'sync-status syncing';
-            syncStatus.style.display = 'block';
+        function updateDropdowns() {
+            const jobSelect = document.getElementById('member-job');
+            const hometownSelect = document.getElementById('member-hometown');
+            const tribeSelect = document.getElementById('member-tribe');
             
-            // Simulate sync process
-            setTimeout(() => {
-                syncStatus.textContent = 'Sync: Complete';
-                syncStatus.className = 'sync-status';
+            // Clear and populate job select
+            while (jobSelect.options.length > 1) jobSelect.remove(1);
+            availableJobs.forEach(job => {
+                const option = document.createElement('option');
+                option.value = job;
+                option.textContent = job;
+                jobSelect.appendChild(option);
+            });
+            
+            // Clear and populate hometown select
+            while (hometownSelect.options.length > 1) hometownSelect.remove(1);
+            availableHometowns.forEach(town => {
+                const option = document.createElement('option');
+                option.value = town;
+                option.textContent = town;
+                hometownSelect.appendChild(option);
+            });
+            
+            // Clear and populate tribe select
+            while (tribeSelect.options.length > 1) tribeSelect.remove(1);
+            availableTribes.forEach(tribe => {
+                const option = document.createElement('option');
+                option.value = tribe;
+                option.textContent = tribe;
+                tribeSelect.appendChild(option);
+            });
+        }
+
+        // ========== STORAGE FUNCTIONS ==========
+
+        function saveAllToLocalStorage() {
+            localStorage.setItem('asantemanMembers', JSON.stringify(members));
+            localStorage.setItem('asantemanAttendance', JSON.stringify(attendance));
+            localStorage.setItem('asantemanMeetings', JSON.stringify(meetings));
+            localStorage.setItem('asantemanJobs', JSON.stringify(availableJobs));
+            localStorage.setItem('asantemanHometowns', JSON.stringify(availableHometowns));
+            localStorage.setItem('asantemanTribes', JSON.stringify(availableTribes));
+            localStorage.setItem('asantemanLastSync', Date.now().toString());
+        }
+
+        function saveMeetingsToLocalStorage() {
+            localStorage.setItem('asantemanMeetings', JSON.stringify(meetings));
+        }
+
+        function loadSettings() {
+            try {
+                const url = localStorage.getItem('asantemanScriptUrl');
+                const cloud = localStorage.getItem('asantemanCloudMode');
                 
-                setTimeout(() => {
-                    syncStatus.style.display = 'none';
-                }, 3000);
+                if (url) {
+                    SCRIPT_URL = url;
+                    document.getElementById('script-url').value = url;
+                }
+                isCloudMode = cloud === 'true';
                 
-                showAlert('Data synchronized successfully!', 'success');
-            }, 2000);
+                updateModeIndicator();
+            } catch (e) {
+                console.error('Settings load error:', e);
+            }
+        }
+
+        function loadDataFromLocalStorage() {
+            try {
+                const membersData = localStorage.getItem('asantemanMembers');
+                const attendanceData = localStorage.getItem('asantemanAttendance');
+                const meetingsData = localStorage.getItem('asantemanMeetings');
+                const jobsData = localStorage.getItem('asantemanJobs');
+                const hometownsData = localStorage.getItem('asantemanHometowns');
+                const tribesData = localStorage.getItem('asantemanTribes');
+                
+                if (membersData) members = JSON.parse(membersData);
+                if (attendanceData) attendance = JSON.parse(attendanceData);
+                if (meetingsData) meetings = JSON.parse(meetingsData);
+                if (jobsData) availableJobs = JSON.parse(jobsData);
+                if (hometownsData) availableHometowns = JSON.parse(hometownsData);
+                if (tribesData) availableTribes = JSON.parse(tribesData);
+                
+                updateDashboard();
+            } catch (e) {
+                console.error('Error loading data from localStorage:', e);
+            }
+        }
+
+        // ========== UI HELPER FUNCTIONS ==========
+
+        function updateSyncStatus(type, message) {
+            syncStatus.textContent = `Sync: ${message}`;
+            syncStatus.className = 'sync-status';
+            if (type === 'syncing') syncStatus.classList.add('syncing');
+            else if (type === 'error') syncStatus.classList.add('error');
+            else if (type === 'success') {
+                syncStatus.classList.add('success');
+                setTimeout(() => syncStatus.style.display = 'none', 3000);
+            }
+            syncStatus.style.display = 'block';
         }
 
         function showAlert(message, type) {
-            // Create alert element
             const alert = document.createElement('div');
             alert.className = `alert alert-${type}`;
             alert.textContent = message;
             
-            // Add to the top of the content
             const content = document.querySelector('.app-content');
             content.insertBefore(alert, content.firstChild);
             
-            // Remove after 5 seconds
             setTimeout(() => {
                 alert.remove();
             }, 5000);
+        }
+
+        function showConfirmModal(message, callback) {
+            confirmMessage.textContent = message;
+            confirmModal.style.display = 'flex';
+            window.confirmCallback = callback;
+        }
+
+        function confirmAction() {
+            if (window.confirmCallback) {
+                window.confirmCallback();
+            }
+            confirmModal.style.display = 'none';
         }
     </script>
 </body>
