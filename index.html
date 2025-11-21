@@ -915,6 +915,7 @@
         <div class="app-body">
             <div class="sidebar">
                 <div class="dropdown-nav" id="sidebar-nav">
+                    <!-- Dynamic sidebar content will be generated here -->
                 </div>
             </div>
             <div class="main-content">
@@ -1079,6 +1080,7 @@
                             <label class="form-label" for="member-dob">Date of Birth</label>
                             <input type="text" class="form-control" id="member-dob" placeholder="Click to select date" readonly>
                             <div class="calendar-container" id="birthday-calendar">
+                                <!-- Calendar will be generated here -->
                             </div>
                         </div>
                         <div class="form-group">
@@ -1399,14 +1401,15 @@
         let availableTribes = ['Akan', 'Ewe', 'Ga', 'Dagomba', 'Fante'];
         let availableDepartments = ['General', 'Education', 'Commerce', 'Health', 'Agriculture'];
         let availablePositions = ['Member', 'Leader', 'Secretary', 'Treasurer', 'Organizer'];
-        let availableChapters = [];
-        let availableGroups = [];
+        let availableChapters = []; // Start with empty chapters
+        let availableGroups = []; // Start with empty groups
         let cameraStream = null;
         let settingsPassword = "admin123";
         let users = [
             { username: 'admin', password: 'admin123', role: 'admin' },
             { username: 'user', password: 'user123', role: 'user' }
         ];
+        // Menu structure
         let menuStructure = [
             {
                 id: 'attendance',
@@ -1444,10 +1447,10 @@
                 ]
             }
         ];
+        // Default URLs - user can change these
         let SCRIPT_URL = '';
         let SHEET_ID = '';
         let isCloudMode = false;
-
         // DOM Elements
         const searchInput = document.getElementById('search-input');
         const searchBtn = document.getElementById('search-btn');
@@ -1547,20 +1550,19 @@
         const viewAllMembersBtn = document.getElementById('view-all-members-btn');
         const modeIndicator = document.getElementById('mode-indicator');
         const sidebarNav = document.getElementById('sidebar-nav');
+        // ✅ NEW: Status Indicator Elements
         const internetDot = document.getElementById('internet-dot');
         const internetStatus = document.getElementById('internet-status');
         const backendDot = document.getElementById('backend-dot');
         const backendStatus = document.getElementById('backend-status');
         const sheetDot = document.getElementById('sheet-dot');
         const sheetStatus = document.getElementById('sheet-status');
-
-        // Initialize
+        // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
             setupEventListeners();
             updateUI();
         });
-
         function initializeApp() {
             loadSettings();
             setupLogoUpload();
@@ -1571,11 +1573,12 @@
             renderChaptersList();
             renderGroupsList();
             updateModeIndicator();
+            // ✅ NEW: Init Internet Monitoring
             checkInternetStatus();
             window.addEventListener('online', checkInternetStatus);
             window.addEventListener('offline', checkInternetStatus);
         }
-
+        // ✅ NEW: Internet status checker
         function checkInternetStatus() {
             if (navigator.onLine) {
                 updateStatusDot(internetDot, 'ok', 'Online');
@@ -1585,7 +1588,7 @@
                 internetStatus.textContent = 'Offline';
             }
         }
-
+        // ✅ NEW: Helper to update status dot & text
         function updateStatusDot(element, status, message = '') {
             let color;
             switch (status) {
@@ -1601,7 +1604,7 @@
                 if (sibling) sibling.textContent = message;
             }
         }
-
+        // Mode & UI helpers
         function updateModeIndicator() {
             if (isCloudMode && SHEET_ID && SCRIPT_URL) {
                 modeIndicator.textContent = "Cloud Mode";
@@ -1611,7 +1614,6 @@
                 modeIndicator.className = "mode-indicator local";
             }
         }
-
         function generateSidebar() {
             sidebarNav.innerHTML = '';
             menuStructure.forEach(menu => {
@@ -1633,7 +1635,6 @@
             });
             attachSidebarEventListeners();
         }
-
         function attachSidebarEventListeners() {
             const dropdownBtns = document.querySelectorAll('.dropdown-btn');
             const subTabs = document.querySelectorAll('.sub-tab');
@@ -1673,7 +1674,6 @@
                 });
             });
         }
-
         function updateMenuBuilder() {
             parentMenuSelect.innerHTML = '<option value="">Select Parent Menu</option>';
             menuStructure.forEach(menu => {
@@ -1724,16 +1724,13 @@
                 });
             });
         }
-
         function saveMenuStructure() {
             localStorage.setItem('asantemanMenuStructure', JSON.stringify(menuStructure));
         }
-
         function loadMenuStructure() {
             const saved = localStorage.getItem('asantemanMenuStructure');
             if (saved) menuStructure = JSON.parse(saved);
         }
-
         function showConfirmModal(message, callback) {
             confirmMessage.textContent = message;
             confirmModal.style.display = 'flex';
@@ -1744,7 +1741,6 @@
             yes.onclick = function() { confirmModal.style.display = 'none'; callback(); };
             no.onclick = () => confirmModal.style.display = 'none';
         }
-
         function loadSettings() {
             loadMenuStructure();
             try {
@@ -1765,7 +1761,6 @@
                 showAlert('Error loading settings', 'error');
             }
         }
-
         function saveSettings() {
             const id = sheetIdInput.value.trim();
             const url = scriptUrlInput.value.trim();
@@ -1784,7 +1779,6 @@
                 return false;
             }
         }
-
         function clearSettings() {
             showConfirmModal('Clear ALL cloud settings?', function() {
                 ['asantemanSheetId', 'asantemanScriptUrl', 'asantemanCloudMode'].forEach(k => localStorage.removeItem(k));
@@ -1795,7 +1789,6 @@
                 showAlert('✅ Settings cleared', 'success');
             });
         }
-
         function setupLogoUpload() {
             const logoContainer = document.getElementById('logo-container');
             logoContainer.onclick = () => {
@@ -1817,7 +1810,6 @@
             const saved = localStorage.getItem('asantemanLogo');
             if (saved) logoContainer.innerHTML = `<img src="${saved}" alt="Logo">`;
         }
-
         function setupEventListeners() {
             attachSidebarEventListeners();
             submitPasswordBtn.onclick = checkPassword;
@@ -1871,7 +1863,6 @@
                 }
             };
         }
-
         function switchContentSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
@@ -1882,7 +1873,6 @@
             else if (sectionId === 'chapter-management') renderChaptersList();
             else if (sectionId === 'member-groups') renderGroupsList();
         }
-
         function checkPassword() {
             if (passwordInput.value === settingsPassword) {
                 passwordModal.style.display = 'none';
@@ -1900,7 +1890,6 @@
                 passwordInput.value = '';
             }
         }
-
         function updateDropdowns() {
             const selects = [
                 { el: jobSelect, data: availableJobs },
@@ -1920,7 +1909,6 @@
             });
             updateOptionsList();
         }
-
         function updateOptionsList() {
             const cat = optionCategory.value;
             let arr;
@@ -1944,7 +1932,6 @@
                 btn.onclick = () => deleteOption(btn.getAttribute('data-option'));
             });
         }
-
         function addNewOption() {
             const val = newOptionInput.value.trim();
             const cat = optionCategory.value;
@@ -1967,7 +1954,6 @@
             newOptionInput.value = '';
             showAlert(`"${val}" added`, 'success');
         }
-
         function deleteOption(opt) {
             const cat = optionCategory.value;
             let arr, name;
@@ -1991,7 +1977,6 @@
                 });
             }
         }
-
         function generateCalendar() {
             const today = new Date();
             const month = today.getMonth();
@@ -2031,7 +2016,6 @@
             birthdayCalendar.querySelector('#prev-month').onclick = () => setTimeout(generateCalendar, 100);
             birthdayCalendar.querySelector('#next-month').onclick = () => setTimeout(generateCalendar, 100);
         }
-
         async function startCamera() {
             try {
                 cameraStream = await navigator.mediaDevices.getUserMedia({ 
@@ -2044,7 +2028,6 @@
                 showAlert('Camera access denied. Check permissions.', 'error');
             }
         }
-
         function stopCamera() {
             if (cameraStream) {
                 cameraStream.getTracks().forEach(t => t.stop());
@@ -2053,7 +2036,6 @@
             cameraContainer.style.display = 'none';
             cameraBtn.disabled = false;
         }
-
         function capturePhoto() {
             const canvas = document.createElement('canvas');
             canvas.width = cameraVideo.videoWidth;
@@ -2064,13 +2046,11 @@
             stopCamera();
             showAlert('Photo captured!', 'success');
         }
-
         function removeProfilePicture() {
             currentCapture = null;
             capturePreview.innerHTML = '<span>No profile picture</span>';
             showAlert('Photo removed', 'success');
         }
-
         function performSearch() {
             const q = searchInput.value.trim().toLowerCase();
             if (!q) return searchResults.style.display = 'none';
@@ -2079,7 +2059,6 @@
             );
             displaySearchResults(res);
         }
-
         function displaySearchResults(results) {
             searchResults.innerHTML = results.length 
                 ? results.map(m => {
@@ -2104,7 +2083,7 @@
                 : '<div class="search-result-item">No members found</div>';
             searchResults.style.display = 'block';
         }
-
+        // Helper to select by ID (for onclick binding)
         window.selectMemberById = function(id) {
             const member = members.find(m => m.id === id);
             if (member) selectMember(member);
@@ -2117,7 +2096,6 @@
                 searchResults.style.display = 'none';
             }
         }
-
         function selectMember(member) {
             currentSelectedMember = member;
             searchInput.value = `${member.name} (${member.phone || 'No phone'})`;
@@ -2135,7 +2113,6 @@
                 : 'READY FOR VERIFICATION - Confirm identity and verify';
             verificationStatus.className = `verification-status ${isVerified ? 'verified' : 'not-verified'}`;
         }
-
         function displayMemberProfile(member) {
             const avatar = member.image 
                 ? `<img src="${member.image}" alt="${member.name}" style="width:100%;height:100%;object-fit:cover;">`
@@ -2152,7 +2129,6 @@
                 <div class="profile-id">Click to view full profile</div>
             `;
         }
-
         async function verifyAttendance() {
             if (!currentSelectedMember) return showAlert('Select a member first', 'error');
             const now = new Date();
@@ -2174,18 +2150,20 @@
             attendance.push(rec);
             saveAllToLocalStorage();
             try {
-                if (isCloudMode && SHEET_ID && SCRIPT_URL) await saveAttendanceToCloud(rec);
+                await saveAttendanceToCloud(rec);
                 verificationStatus.textContent = 'VERIFICATION SUCCESSFUL - Attendance marked';
                 verificationStatus.className = 'verification-status verified';
                 lastVerifiedEl.textContent = now.toLocaleTimeString();
                 showAlert(`Attendance verified for ${currentSelectedMember.name}`, 'success');
                 updateUI();
+                isCloudMode = true;
+                localStorage.setItem('asantemanCloudMode', 'true');
+                updateModeIndicator();
             } catch (err) {
                 console.error('Cloud save failed:', err);
                 showAlert(`✅ Verified locally, but cloud sync failed: ${err.message}`, 'error');
             }
         }
-
         function clearSearch() {
             searchInput.value = '';
             searchResults.style.display = 'none';
@@ -2194,7 +2172,6 @@
             verificationStatus.className = 'verification-status not-verified';
             currentSelectedMember = null;
         }
-
         async function saveMember() {
             const name = memberNameInput.value.trim();
             const id = memberIdInput.value.trim();
@@ -2234,12 +2211,16 @@
                     await saveMemberToCloud(data);
                     showAlert(`${name} added`, 'success');
                 }
+                // reset
                 [memberNameInput, memberIdInput, memberPhoneInput, memberDobInput].forEach(el => el.value = '');
                 [jobSelect, hometownSelect, tribeSelect, chapterSelect, groupSelect].forEach(el => el.value = '');
                 capturePreview.innerHTML = '<span>No profile picture</span>';
                 currentCapture = null;
                 saveAllToLocalStorage();
                 updateUI();
+                isCloudMode = true;
+                localStorage.setItem('asantemanCloudMode', 'true');
+                updateModeIndicator();
             } catch (err) {
                 console.error(err);
                 showAlert('Error saving member: ' + err.message, 'error');
@@ -2248,7 +2229,6 @@
                 saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Member';
             }
         }
-
         function deleteMember(id) {
             const member = members.find(m => m.id === id);
             if (!member) return;
@@ -2261,13 +2241,15 @@
                     updateUI();
                     if (currentSelectedMember && currentSelectedMember.id === id) clearSearch();
                     showAlert('Member deleted', 'success');
+                    isCloudMode = true;
+                    localStorage.setItem('asantemanCloudMode', 'true');
+                    updateModeIndicator();
                 } catch (err) {
                     console.error(err);
                     showAlert('Delete failed: ' + err.message, 'error');
                 }
             });
         }
-
         function updateUI() {
             const jobFilterVal = jobFilter.value;
             const today = new Date();
@@ -2287,7 +2269,6 @@
             renderUserManagementList();
             updateOverview();
         }
-
         function updateOverview() {
             const today = new Date();
             const todayRecords = attendance.filter(r => {
@@ -2325,7 +2306,6 @@
                 activeMeetingDisplay.innerHTML = '<p>No active meeting.</p>';
             }
         }
-
         function renderAttendanceList(jobFilter = 'all') {
             const today = new Date();
             attendanceList.innerHTML = '';
@@ -2364,7 +2344,6 @@
                 `;
             });
         }
-
         function renderUserManagementList() {
             userManagementList.innerHTML = members.length 
                 ? members.sort((a, b) => a.name.localeCompare(b.name)).map(m => {
@@ -2385,7 +2364,7 @@
                 }).join('')
                 : '<p>No members added yet.</p>';
         }
-
+        // Edit by ID helpers
         window.editMemberById = function(id) {
             const member = members.find(m => m.id === id);
             if (member) {
@@ -2416,7 +2395,6 @@
                 showAlert(`Editing: ${member.name}`, 'info');
             }
         };
-
         function renderAllMembersList() {
             allMembersList.innerHTML = members.length 
                 ? members.sort((a, b) => a.name.localeCompare(b.name)).map(m => {
@@ -2436,7 +2414,6 @@
                 }).join('')
                 : '<p>No members added yet.</p>';
         }
-
         function performAllMembersSearch() {
             const q = allMembersSearchInput.value.trim().toLowerCase();
             if (!q) return renderAllMembersList();
@@ -2461,7 +2438,6 @@
                 }).join('')
                 : '<p>No members found.</p>';
         }
-
         function performManageSearch() {
             const q = manageSearchInput.value.trim().toLowerCase();
             if (!q) return renderUserManagementList();
@@ -2487,7 +2463,6 @@
                 }).join('')
                 : '<p>No members found.</p>';
         }
-
         function createNewMeeting() {
             const date = meetingDateInput.value;
             const title = meetingTitleInput.value.trim();
@@ -2503,7 +2478,6 @@
             meetingDateInput.value = ''; meetingTitleInput.value = '';
             showAlert(`"${title}" created`, 'success');
         }
-
         function renderMeetings() {
             const today = new Date();
             today.setHours(0,0,0,0);
@@ -2544,12 +2518,10 @@
                 btn.onclick = () => viewMeeting(btn.getAttribute('data-id'));
             });
         }
-
         function viewMeeting(id) {
             const meeting = meetings.find(m => m.id === id);
             if (meeting) showAlert(`Viewing: ${meeting.title}`, 'info');
         }
-
         function getUpcomingBirthdays(days = 7) {
             const today = new Date();
             return members.filter(m => m.dateOfBirth).map(m => {
@@ -2559,7 +2531,6 @@
                 return { member: m, daysUntil: diffDays };
             }).filter(i => i.daysUntil >= 0 && i.daysUntil <= days).sort((a, b) => a.daysUntil - b.daysUntil);
         }
-
         function renderBirthdayReminders() {
             const upcoming = getUpcomingBirthdays(7);
             const thisMonth = getBirthdaysThisMonth();
@@ -2591,17 +2562,14 @@
             renderBirthdayList(upcoming, upcomingBirthdaysList, 'No birthdays in next 7 days.');
             renderBirthdayList(thisMonth, monthBirthdaysList, 'No birthdays this month.');
         }
-
         function getBirthdaysThisMonth() {
             const month = new Date().getMonth() + 1;
             return members.filter(m => m.dateOfBirth && parseInt(m.dateOfBirth.split('/')[0]) === month);
         }
-
         function getBirthdaysNextMonth() {
             const next = new Date().getMonth() + 2 > 12 ? 1 : new Date().getMonth() + 2;
             return members.filter(m => m.dateOfBirth && parseInt(m.dateOfBirth.split('/')[0]) === next);
         }
-
         function renderChaptersList() {
             chaptersList.innerHTML = availableChapters.length 
                 ? availableChapters.map(c => `
@@ -2624,7 +2592,6 @@
                 btn.onclick = () => editChapter(btn.getAttribute('data-name'));
             });
         }
-
         function addNewChapter() {
             const name = newChapterName.value.trim();
             const loc = newChapterLocation.value.trim();
@@ -2638,7 +2605,6 @@
             [newChapterName, newChapterLocation, newChapterLeader].forEach(el => el.value = '');
             showAlert(`"${name}" added`, 'success');
         }
-
         function deleteChapter(name) {
             showConfirmModal(`Delete chapter "${name}"?`, () => {
                 availableChapters = availableChapters.filter(c => c.name !== name);
@@ -2648,7 +2614,6 @@
                 showAlert(`"${name}" deleted`, 'success');
             });
         }
-
         function editChapter(name) {
             const chapter = availableChapters.find(c => c.name === name);
             if (chapter) {
@@ -2662,7 +2627,6 @@
                 showAlert(`Editing "${name}". Update and click "Add Chapter".`, 'info');
             }
         }
-
         function renderGroupsList() {
             groupsList.innerHTML = availableGroups.length 
                 ? availableGroups.map(g => `
@@ -2685,7 +2649,6 @@
                 btn.onclick = () => editGroup(btn.getAttribute('data-name'));
             });
         }
-
         function createNewGroup() {
             const name = newGroupName.value.trim();
             const desc = newGroupDescription.value.trim();
@@ -2698,7 +2661,6 @@
             newGroupName.value = ''; newGroupDescription.value = '';
             showAlert(`"${name}" created`, 'success');
         }
-
         function deleteGroup(name) {
             showConfirmModal(`Delete group "${name}"?`, () => {
                 availableGroups = availableGroups.filter(g => g.name !== name);
@@ -2708,7 +2670,6 @@
                 showAlert(`"${name}" deleted`, 'success');
             });
         }
-
         function editGroup(name) {
             const group = availableGroups.find(g => g.name === name);
             if (group) {
@@ -2721,12 +2682,39 @@
                 showAlert(`Editing "${name}". Update and click "Create Group".`, 'info');
             }
         }
+        // ========== CLOUD SYNC FUNCTIONS (ENHANCED) ==========
+        
+        // ✅ Helper: Clean member/attendance data for safe transmission
+        function cleanMember(m) {
+            return {
+                id: String(m.id),
+                name: String(m.name || ''),
+                idNumber: String(m.idNumber || ''),
+                phone: String(m.phone || ''),
+                dateOfBirth: String(m.dateOfBirth || ''),
+                job: String(m.job || ''),
+                hometown: String(m.hometown || ''),
+                tribe: String(m.tribe || ''),
+                chapter: String(m.chapter || ''),
+                group: String(m.group || ''),
+                image: String(m.image || ''),
+                joinDate: m.joinDate ? String(m.joinDate) : new Date().toISOString().split('T')[0],
+                lastUpdated: m.lastUpdated ? String(m.lastUpdated) : new Date().toISOString()
+            };
+        }
+        
+        function cleanAttendance(a) {
+            return {
+                memberId: String(a.memberId),
+                memberName: String(a.memberName || ''),
+                timestamp: a.timestamp ? String(a.timestamp) : new Date().toISOString(),
+                verificationTime: a.verificationTime ? String(a.verificationTime) : new Date().toISOString()
+            };
+        }
 
-        // ========== ✅ FIXED CLOUD SYNC FUNCTIONS (CORS-SAFE) ==========
-
-        // ✅ Test connection (GET only)
-        async function testScriptConnection(url, sheetId) {
-            const testUrl = `${url}?action=test&sheetId=${encodeURIComponent(sheetId || 'test')}&t=${Date.now()}`;
+        // ✅ Test connection (simple GET)
+        async function testScriptConnection(url) {
+            const testUrl = `${url}?action=test&t=${Date.now()}`;
             const res = await fetch(testUrl);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const data = await res.json();
@@ -2734,20 +2722,18 @@
             return true;
         }
 
-        // ✅ Compare & Sync Structure (GET — unchanged)
+        // ✅ Compare & Sync Structure (GET — works)
         async function compareAndSyncSheetStructure() {
-            if (!SHEET_ID || !SCRIPT_URL) return showAlert('Configure settings first', 'error');
+            if (!SCRIPT_URL) return showAlert('Configure script URL first', 'error');
             updateStatusDot(backendDot, 'pending', 'Testing…');
             updateStatusDot(sheetDot, 'pending', 'Testing…');
             try {
-                await testScriptConnection(SCRIPT_URL, SHEET_ID);
-                const url = `${SCRIPT_URL}?action=initSheet&sheetId=${encodeURIComponent(SHEET_ID)}`;
+                await testScriptConnection(SCRIPT_URL);
+                const url = `${SCRIPT_URL}?action=initSheet`;
                 const res = await fetch(url);
                 const data = await res.json();
                 if (!data.success) throw new Error(data.error || 'Init failed');
                 showAlert('✅ Sheet structure synchronized', 'success');
-                updateStatusDot(backendDot, 'ok', 'Connected');
-                updateStatusDot(sheetDot, 'ok', 'Accessible');
                 isCloudMode = true;
                 localStorage.setItem('asantemanCloudMode', 'true');
                 updateModeIndicator();
@@ -2759,21 +2745,22 @@
                 isCloudMode = false;
                 localStorage.setItem('asantemanCloudMode', 'false');
                 updateModeIndicator();
+                updateDatabaseStatus('Sheet init failed');
             }
         }
 
-        // ✅ Sync All (POST form-encoded — NO CORS)
+        // ✅ FIXED: Sync using form POST (no JSON payload error)
         async function syncDataToCloud() {
-            if (!SHEET_ID || !SCRIPT_URL) return showAlert('Configure settings first', 'error');
+            if (!SCRIPT_URL) return showAlert('Configure script URL first', 'error');
             updateSyncStatus('syncing', 'Syncing to cloud…');
             try {
-                await testScriptConnection(SCRIPT_URL, SHEET_ID);
+                await testScriptConnection(SCRIPT_URL);
 
+                // ✅ Build form data (simple request, no preflight)
                 const formData = new URLSearchParams();
                 formData.append('action', 'syncAll');
-                formData.append('sheetId', SHEET_ID);
-                formData.append('members', JSON.stringify(members));
-                formData.append('attendance', JSON.stringify(attendance));
+                formData.append('members', JSON.stringify(members.map(cleanMember)));
+                formData.append('attendance', JSON.stringify(attendance.map(cleanAttendance)));
                 formData.append('version', '1.0');
 
                 const res = await fetch(SCRIPT_URL, {
@@ -2790,7 +2777,7 @@
                 isCloudMode = true;
                 localStorage.setItem('asantemanCloudMode', 'true');
                 updateModeIndicator();
-                updateDatabaseStatus(`Connected to Cloud Sheet: ${SHEET_ID.substring(0,12)}...`);
+                updateDatabaseStatus(`Connected to backend`);
                 updateSyncStatus('success', 'Sync complete');
             } catch (err) {
                 console.error('Sync error:', err);
@@ -2802,13 +2789,73 @@
             }
         }
 
-        // ✅ Load Data from Cloud (GET — unchanged)
+        // ✅ FIXED: Save Member
+        async function saveMemberToCloud(member) {
+            const formData = new URLSearchParams();
+            formData.append('action', 'saveMember');
+            formData.append('member', JSON.stringify(cleanMember(member)));
+
+            const res = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
+            });
+            const data = await res.json();
+            if (!data.success) throw new Error(data.error || 'Cloud save failed');
+        }
+
+        // ✅ FIXED: Update Member
+        async function updateMemberOnCloud(member) {
+            const formData = new URLSearchParams();
+            formData.append('action', 'updateMember');
+            formData.append('member', JSON.stringify(cleanMember(member)));
+
+            const res = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
+            });
+            const data = await res.json();
+            if (!data.success) throw new Error(data.error || 'Cloud update failed');
+        }
+
+        // ✅ FIXED: Delete Member
+        async function deleteMemberFromCloud(memberId) {
+            const formData = new URLSearchParams();
+            formData.append('action', 'deleteMember');
+            formData.append('memberId', memberId);
+
+            const res = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
+            });
+            const data = await res.json();
+            if (!data.success) throw new Error(data.error || 'Cloud delete failed');
+        }
+
+        // ✅ FIXED: Save Attendance
+        async function saveAttendanceToCloud(rec) {
+            const formData = new URLSearchParams();
+            formData.append('action', 'saveAttendance');
+            formData.append('attendance', JSON.stringify(cleanAttendance(rec)));
+
+            const res = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
+            });
+            const data = await res.json();
+            if (!data.success) throw new Error(data.error || 'Cloud attendance save failed');
+        }
+
+        // ✅ Load Data (GET — unchanged)
         async function loadDataFromCloud() {
-            if (!SHEET_ID || !SCRIPT_URL) return showAlert('Configure settings first', 'error');
+            if (!SCRIPT_URL) return showAlert('Configure script URL first', 'error');
             updateSyncStatus('syncing', 'Loading from cloud…');
             try {
-                await testScriptConnection(SCRIPT_URL, SHEET_ID);
-                const url = `${SCRIPT_URL}?action=getMembers&sheetId=${encodeURIComponent(SHEET_ID)}&t=${Date.now()}`;
+                await testScriptConnection(SCRIPT_URL);
+                const url = `${SCRIPT_URL}?action=getMembers&t=${Date.now()}`;
                 const res = await fetch(url);
                 const data = await res.json();
                 if (!data.success) throw new Error(data.error || 'Load failed');
@@ -2818,7 +2865,7 @@
                 isCloudMode = true;
                 localStorage.setItem('asantemanCloudMode', 'true');
                 updateModeIndicator();
-                updateDatabaseStatus(`Connected to Cloud Sheet: ${SHEET_ID.substring(0,12)}...`);
+                updateDatabaseStatus(`Loaded ${members.length} members`);
                 updateSyncStatus('success', 'Load complete');
                 updateUI();
             } catch (err) {
@@ -2834,25 +2881,25 @@
         // ✅ Enhanced testConnection
         async function testConnection() {
             if (!saveSettings()) return showAlert('Save settings first', 'error');
-            if (!SHEET_ID || !SCRIPT_URL) return showAlert('Enter Sheet ID & Script URL', 'error');
+            if (!SCRIPT_URL) return showAlert('Enter Script URL', 'error');
 
             updateStatusDot(backendDot, 'pending', 'Testing…');
             updateStatusDot(sheetDot, 'pending', 'Testing…');
             try {
-                await testScriptConnection(SCRIPT_URL, SHEET_ID);
+                await testScriptConnection(SCRIPT_URL);
                 updateStatusDot(backendDot, 'ok', 'Connected');
 
-                const testUrl = `${SCRIPT_URL}?action=getMembers&sheetId=${encodeURIComponent(SHEET_ID)}&t=${Date.now()}`;
+                const testUrl = `${SCRIPT_URL}?action=getMembers&t=${Date.now()}`;
                 const res = await fetch(testUrl);
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data = await res.json();
-                if (!data.success) throw new Error(data.error || 'Sheet access failed');
+                if (!data.success) throw new Error(data.error || 'Data access failed');
                 updateStatusDot(sheetDot, 'ok', 'Accessible');
 
                 isCloudMode = true;
                 localStorage.setItem('asantemanCloudMode', 'true');
                 updateModeIndicator();
-                updateDatabaseStatus(`Connected to Cloud Sheet: ${SHEET_ID.substring(0,12)}...`);
+                updateDatabaseStatus(`Connected to backend`);
                 updateSyncStatus('success', '✅ Test passed');
                 showAlert('✅ Connection verified', 'success');
             } catch (err) {
@@ -2861,76 +2908,10 @@
                 isCloudMode = false;
                 localStorage.setItem('asantemanCloudMode', 'false');
                 updateModeIndicator();
-                updateDatabaseStatus('Cloud mode disabled due to connection issues');
+                updateDatabaseStatus('Connection failed');
                 updateSyncStatus('error', '❌ Connection test failed');
                 showAlert('❌ Test failed: ' + err.message, 'error');
             }
-        }
-
-        // ✅ Cloud CRUD — CORS-safe form POST
-
-        async function saveMemberToCloud(member) {
-            if (!isCloudMode || !SHEET_ID || !SCRIPT_URL) return;
-            const formData = new URLSearchParams();
-            formData.append('action', 'saveMember');
-            formData.append('sheetId', SHEET_ID);
-            formData.append('member', JSON.stringify(member));
-
-            const res = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: formData
-            });
-            const data = await res.json();
-            if (!data.success) throw new Error(data.error || 'Cloud save failed');
-        }
-
-        async function updateMemberOnCloud(member) {
-            if (!isCloudMode || !SHEET_ID || !SCRIPT_URL) return;
-            const formData = new URLSearchParams();
-            formData.append('action', 'updateMember');
-            formData.append('sheetId', SHEET_ID);
-            formData.append('member', JSON.stringify(member));
-
-            const res = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: formData
-            });
-            const data = await res.json();
-            if (!data.success) throw new Error(data.error || 'Cloud update failed');
-        }
-
-        async function deleteMemberFromCloud(memberId) {
-            if (!isCloudMode || !SHEET_ID || !SCRIPT_URL) return;
-            const formData = new URLSearchParams();
-            formData.append('action', 'deleteMember');
-            formData.append('sheetId', SHEET_ID);
-            formData.append('memberId', memberId);
-
-            const res = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: formData
-            });
-            const data = await res.json();
-            if (!data.success) throw new Error(data.error || 'Cloud delete failed');
-        }
-
-        async function saveAttendanceToCloud(rec) {
-            if (!isCloudMode || !SHEET_ID || !SCRIPT_URL) return;
-            const formData = new URLSearchParams();
-            formData.append('action', 'saveAttendance');
-            formData.append('sheetId', SHEET_ID);
-            formData.append('attendance', JSON.stringify(rec));
-
-            const res = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: formData
-            });
-            const data = await res.json();
-            if (!data.success) throw new Error(data.error || 'Cloud attendance save failed');
         }
 
         // UI helpers
@@ -2939,7 +2920,6 @@
                 <div style="background: #f8f9fa; padding:15px; border-radius:5px; border-left:4px solid #17a2b8;">
                     <h4 style="margin-bottom:10px;color:#17a2b8;">Database Status</h4>
                     <p style="margin:0;">${message}</p>
-                    ${SHEET_ID ? `<p style="margin:5px 0 0 0;font-size:0.9em;"><strong>Sheet ID:</strong> ${SHEET_ID}</p>` : ''}
                     ${SCRIPT_URL ? `<p style="margin:0;font-size:0.9em;"><strong>Script URL:</strong> ${SCRIPT_URL.substring(0,50)}...</p>` : ''}
                     <p style="margin:5px 0 0 0;font-size:0.9em;"><strong>Mode:</strong> ${isCloudMode ? 'Cloud ✅' : 'Local ⚠️'}</p>
                 </div>
@@ -2959,8 +2939,8 @@
         }
 
         function manualConnectionTest() {
-            if (!SHEET_ID || !SCRIPT_URL) return alert('Set Sheet ID and Script URL first');
-            const testUrl = `${SCRIPT_URL}?action=test&sheetId=${SHEET_ID}`;
+            if (!SCRIPT_URL) return alert('Set Script URL first');
+            const testUrl = `${SCRIPT_URL}?action=test`;
             alert(`Testing: ${testUrl}\nCheck deployment settings in GAS.`);
             fetch(testUrl)
                 .then(r => { alert(`Status: ${r.status}`); return r.json(); })
@@ -2968,6 +2948,7 @@
                 .catch(e => alert(`Error: ${e.message}`));
         }
 
+        // Storage
         function saveAllToLocalStorage() {
             const keys = ['Members', 'Attendance', 'Jobs', 'Hometowns', 'Tribes', 'Departments', 'Positions', 'Chapters', 'Groups', 'LastSync'];
             const values = [members, attendance, availableJobs, availableHometowns, availableTribes, availableDepartments, availablePositions, availableChapters, availableGroups, Date.now().toString()];
@@ -3080,7 +3061,7 @@
 
         // Init
         renderUsersList();
-
+        
         // Menu CRUD
         function addNewMenu() {
             const name = newMenuName.value.trim();
@@ -3144,6 +3125,11 @@
                 }
             });
         }
+        
+        // ✅ Hide Sheet ID field (container-bound script)
+        document.addEventListener('DOMContentLoaded', function() {
+            if (sheetIdInput) sheetIdInput.closest('.form-group').style.display = 'none';
+        });
     </script>
 </body>
 </html>
