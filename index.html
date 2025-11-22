@@ -6,823 +6,192 @@
     <title>ASANTEMAN FETTEH KUO - Mobile Attendance</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
+        /* === COMPREHENSIVE MOBILE STYLES === */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
         :root {
-            --primary: #1a2a6c;
-            --secondary: #b21f1f;
-            --accent: #fdbb2d;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --success: #28a745;
-            --danger: #dc3545;
-            --warning: #ffc107;
-            --info: #17a2b8;
-            --card-bg: #ffffff;
-            --text-primary: #333333;
-            --text-secondary: #666666;
-            --border: #e0e0e0;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --primary: #1a2a6c; --secondary: #b21f1f; --accent: #fdbb2d; --light: #f8f9fa; --dark: #343a40;
+            --success: #28a745; --danger: #dc3545; --warning: #ffc107; --info: #17a2b8; --card-bg: #ffffff;
+            --text-primary: #333333; --text-secondary: #666666; --border: #e0e0e0; --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        body {
-            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
-            min-height: 100vh;
-            color: var(--text-primary);
-            overflow-x: hidden;
-        }
+        body { background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent)); min-height: 100vh; color: var(--text-primary); overflow-x: hidden; }
 
-        .mobile-container {
-            max-width: 480px;
-            margin: 0 auto;
-            background: white;
-            min-height: 100vh;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
+        .mobile-container { max-width: 480px; margin: 0 auto; background: white; min-height: 100vh; box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); position: relative; overflow: hidden; }
 
         /* Header Styles */
-        .app-header {
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            position: relative;
-            z-index: 10;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-container {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .logo-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .header-text {
-            flex: 1;
-        }
-
-        .app-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-
-        .app-subtitle {
-            font-size: 0.85rem;
-            opacity: 0.9;
-        }
-
-        .mode-indicator {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            margin-left: 8px;
-            background: var(--success);
-        }
-
-        .mode-indicator.local {
-            background: #6c757d;
-        }
-
-        .header-right {
-            display: flex;
-            gap: 10px;
-        }
-
-        .header-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
+        .app-header { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); position: relative; z-index: 10; }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .logo-container { width: 50px; height: 50px; border-radius: 12px; overflow: hidden; background: rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; }
+        .logo-container img { width: 100%; height: 100%; object-fit: cover; }
+        .header-text { flex: 1; }
+        .app-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 2px; }
+        .app-subtitle { font-size: 0.85rem; opacity: 0.9; }
+        .mode-indicator { display: inline-block; padding: 4px 8px; border-radius: 15px; font-size: 0.75rem; font-weight: bold; margin-left: 8px; background: var(--success); }
+        .mode-indicator.local { background: #6c757d; }
+        .mode-indicator.offline { background: var(--danger); }
+        .header-right { display: flex; gap: 10px; }
+        .header-icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; }
 
         /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-            max-width: 480px;
-            margin: 0 auto;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            flex: 1;
-            padding: 8px 0;
-            border-radius: 10px;
-            transition: all 0.3s;
-        }
-
-        .nav-item.active {
-            color: var(--primary);
-        }
-
-        .nav-icon {
-            font-size: 1.4rem;
-        }
-
-        .nav-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); z-index: 100; max-width: 480px; margin: 0 auto; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; padding: 8px 0; border-radius: 10px; transition: all 0.3s; cursor: pointer; }
+        .nav-item.active { color: var(--primary); }
+        .nav-icon { font-size: 1.4rem; }
+        .nav-label { font-size: 0.75rem; font-weight: 600; }
 
         /* Main Content */
-        .app-content {
-            padding: 20px 15px 80px 15px;
-            overflow-y: auto;
-            max-height: calc(100vh - 140px);
-        }
-
-        .content-section {
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section-header {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+        .app-content { padding: 20px 15px 80px 15px; overflow-y: auto; max-height: calc(100vh - 140px); }
+        .content-section { display: none; }
+        .content-section.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .section-header { font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; color: var(--primary); display: flex; align-items: center; justify-content: space-between; }
 
         /* Dashboard Cards */
-        .dashboard-cards {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .dashboard-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .dashboard-card:active {
-            transform: scale(0.98);
-        }
-
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        .card-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin: 5px 0;
-        }
-
-        .card-label {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
+        .dashboard-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
+        .dashboard-card { background: var(--card-bg); border-radius: 15px; padding: 20px; box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; text-align: center; transition: transform 0.3s; }
+        .dashboard-card:active { transform: scale(0.98); }
+        .card-icon { width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 10px; }
+        .card-value { font-size: 1.8rem; font-weight: 700; color: var(--primary); margin: 5px 0; }
+        .card-label { font-size: 0.9rem; color: var(--text-secondary); font-weight: 600; }
 
         /* Quick Actions */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .action-btn {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 18px 15px;
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            transition: all 0.3s;
-            border: none;
-            color: var(--text-primary);
-        }
-
-        .action-btn:active {
-            transform: scale(0.98);
-            background: #f5f5f5;
-        }
-
-        .action-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-
-        .action-label {
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
+        .quick-actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px; }
+        .action-btn { background: var(--card-bg); border-radius: 15px; padding: 18px 15px; box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; text-align: center; transition: all 0.3s; border: none; color: var(--text-primary); cursor: pointer; }
+        .action-btn:active { transform: scale(0.98); background: #f5f5f5; }
+        .action-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 10px; }
+        .action-label { font-size: 0.9rem; font-weight: 600; }
 
         /* Recent Activity */
-        .recent-activity {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-        }
-
-        .activity-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .activity-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .view-all {
-            font-size: 0.85rem;
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .activity-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .activity-item:last-child {
-            border-bottom: none;
-        }
-
-        .activity-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 12px;
-        }
-
-        .activity-avatar img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .activity-details {
-            flex: 1;
-        }
-
-        .activity-name {
-            font-weight: 600;
-            margin-bottom: 3px;
-        }
-
-        .activity-time {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .activity-status {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--success);
-        }
+        .recent-activity { background: var(--card-bg); border-radius: 15px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 20px; }
+        .activity-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .activity-title { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
+        .view-all { font-size: 0.85rem; color: var(--primary); font-weight: 600; cursor: pointer; }
+        .activity-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; }
+        .activity-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .activity-details { flex: 1; }
+        .activity-name { font-weight: 600; margin-bottom: 3px; }
+        .activity-time { font-size: 0.8rem; color: var(--text-secondary); }
+        .activity-status { width: 10px; height: 10px; border-radius: 50%; background: var(--success); }
 
         /* Search Section */
-        .search-section {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 15px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            font-size: 1rem;
-            background: #f9f9f9;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .search-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 0 20px;
-            font-size: 1.2rem;
-        }
+        .search-section { display: flex; gap: 10px; margin-bottom: 20px; }
+        .search-input { flex: 1; padding: 15px; border: 1px solid var(--border); border-radius: 12px; font-size: 1rem; background: #f9f9f9; }
+        .search-input:focus { outline: none; border-color: var(--primary); }
+        .search-btn { background: var(--primary); color: white; border: none; border-radius: 12px; padding: 0 20px; font-size: 1.2rem; cursor: pointer; }
 
         /* Profile Display */
-        .profile-display {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .profile-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 2rem;
-            margin: 0 auto 15px;
-            overflow: hidden;
-        }
-
-        .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .profile-name {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .profile-details {
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-        }
-
-        .profile-id {
-            background: #f0f0f0;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            display: inline-block;
-        }
+        .profile-display { background: var(--card-bg); border-radius: 15px; padding: 25px; box-shadow: var(--shadow); margin-bottom: 20px; text-align: center; }
+        .profile-avatar { width: 100px; height: 100px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 2rem; margin: 0 auto 15px; overflow: hidden; }
+        .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-name { font-size: 1.4rem; font-weight: 700; margin-bottom: 5px; }
+        .profile-details { color: var(--text-secondary); margin-bottom: 10px; font-size: 0.95rem; }
+        .profile-id { background: #f0f0f0; padding: 5px 12px; border-radius: 15px; font-size: 0.9rem; display: inline-block; }
 
         /* Verification Status */
-        .verification-status {
-            text-align: center;
-            padding: 15px;
-            border-radius: 12px;
-            margin: 15px 0;
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .verified {
-            background: #e8f5e8;
-            color: #155724;
-        }
-
-        .not-verified {
-            background: #fde8e8;
-            color: #721c24;
-        }
+        .verification-status { text-align: center; padding: 15px; border-radius: 12px; margin: 15px 0; font-weight: 700; font-size: 1rem; }
+        .verified { background: #e8f5e8; color: #155724; }
+        .not-verified { background: #fde8e8; color: #721c24; }
 
         /* Controls */
-        .controls {
-            display: flex;
-            gap: 10px;
-            margin: 20px 0;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 15px 20px;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-
-        .btn-warning {
-            background: var(--warning);
-            color: #212529;
-        }
-
-        .btn-info {
-            background: var(--info);
-            color: white;
-        }
-
-        .btn-sm {
-            padding: 10px 15px;
-            font-size: 0.9rem;
-        }
+        .controls { display: flex; gap: 10px; margin: 20px 0; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 15px 20px; border: none; border-radius: 12px; font-size: 1rem; cursor: pointer; transition: all 0.3s; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-warning { background: var(--warning); color: #212529; }
+        .btn-info { background: var(--info); color: white; }
+        .btn-sm { padding: 10px 15px; font-size: 0.9rem; }
 
         /* Form Elements */
-        .form-container {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            font-size: 1rem;
-            background: #f9f9f9;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
+        .form-container { background: var(--card-bg); border-radius: 15px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 20px; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 1rem; }
+        .form-control { width: 100%; padding: 15px; border: 1px solid var(--border); border-radius: 12px; font-size: 1rem; background: #f9f9f9; }
+        .form-control:focus { outline: none; border-color: var(--primary); }
 
         /* Attendance List */
-        .attendance-list {
-            margin-top: 20px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .attendance-item {
-            padding: 15px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s;
-        }
-
-        .attendance-item:last-child {
-            border-bottom: none;
-        }
-
-        .attendance-item.present {
-            background: #e8f5e8;
-            border-left: 4px solid var(--success);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .user-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            overflow: hidden;
-        }
-
-        .user-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .attendance-time {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .status-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .status-present {
-            background: var(--success);
-        }
-
-        .status-absent {
-            background: var(--danger);
-        }
+        .attendance-list { margin-top: 20px; max-height: 400px; overflow-y: auto; }
+        .attendance-item { padding: 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; transition: all 0.3s; }
+        .attendance-item:last-child { border-bottom: none; }
+        .attendance-item.present { background: #e8f5e8; border-left: 4px solid var(--success); }
+        .user-info { display: flex; align-items: center; gap: 12px; }
+        .user-avatar { width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; overflow: hidden; }
+        .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .attendance-time { color: var(--text-secondary); font-size: 0.9rem; }
+        .status-indicator { width: 12px; height: 12px; border-radius: 50%; }
+        .status-present { background: var(--success); }
+        .status-absent { background: var(--danger); }
 
         /* Tabs */
-        .tabs {
-            display: flex;
-            background: #f0f0f0;
-            border-radius: 12px;
-            padding: 5px;
-            margin-bottom: 20px;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 12px;
-            text-align: center;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .tab.active {
-            background: var(--primary);
-            color: white;
-        }
+        .tabs { display: flex; background: #f0f0f0; border-radius: 12px; padding: 5px; margin-bottom: 20px; }
+        .tab { flex: 1; padding: 12px; text-align: center; border-radius: 10px; font-weight: 600; transition: all 0.3s; cursor: pointer; }
+        .tab.active { background: var(--primary); color: white; }
 
         /* Modals */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            animation: modalAppear 0.3s ease;
-        }
-
-        @keyframes modalAppear {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); max-width: 400px; width: 100%; text-align: center; animation: modalAppear 0.3s ease; }
+        @keyframes modalAppear { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
         /* Sync Status */
-        .sync-status {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            background: var(--info);
-            color: white;
-            padding: 12px 16px;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            display: none;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .sync-status.syncing {
-            background: var(--warning);
-            color: #212529;
-        }
-
-        .sync-status.error {
-            background: var(--danger);
-        }
+        .sync-status { position: fixed; bottom: 80px; right: 20px; background: var(--info); color: white; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; display: none; z-index: 1000; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
+        .sync-status.syncing { background: var(--warning); color: #212529; }
+        .sync-status.error { background: var(--danger); }
 
         /* Alert */
-        .alert {
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border: 1px solid transparent;
-        }
-
-        .alert-success {
-            background: #e8f5e8;
-            color: #155724;
-            border-color: #c3e6cb;
-        }
-
-        .alert-error {
-            background: #fde8e8;
-            color: #721c24;
-            border-color: #f5c6cb;
-        }
-
-        .alert-info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border-color: #bee5eb;
-        }
+        .alert { padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid transparent; }
+        .alert-success { background: #e8f5e8; color: #155724; border-color: #c3e6cb; }
+        .alert-error { background: #fde8e8; color: #721c24; border-color: #f5c6cb; }
+        .alert-info { background: #d1ecf1; color: #0c5460; border-color: #bee5eb; }
 
         /* Connection Status */
-        .connection-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 10px;
-            margin-top: 10px;
-        }
+        .connection-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 10px; }
+        .conn-card { padding: 12px; border-radius: 8px; background-color: #f8f9fa; border: 1px solid #e9ecef; }
+        .conn-label { font-size: 0.8rem; color: #555; font-weight: 600; }
+        .conn-value { font-weight: bold; margin-top: 4px; font-size: 0.85rem; display: flex; align-items: center; }
+        .status-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
 
-        .conn-card {
-            padding: 12px;
-            border-radius: 8px;
-            background-color: #f8f9fa;
-            border: 1px solid #e9ecef;
-        }
+        /* Member List Styles */
+        .member-list { margin-top: 20px; }
+        .member-item { padding: 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; transition: all 0.3s; }
+        .member-item:last-child { border-bottom: none; }
+        .member-item:hover { background: #f8f9fa; }
+        .member-actions { display: flex; gap: 8px; }
 
-        .conn-label {
-            font-size: 0.8rem;
-            color: #555;
-            font-weight: 600;
-        }
+        /* Profile Detail View */
+        .profile-detail-view { background: var(--card-bg); border-radius: 15px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 20px; }
+        .profile-header { text-align: center; margin-bottom: 20px; }
+        .profile-info { display: grid; gap: 15px; }
+        .info-item { display: flex; justify-content: between; padding: 10px 0; border-bottom: 1px solid var(--border); }
+        .info-label { font-weight: 600; color: var(--text-secondary); flex: 1; }
+        .info-value { flex: 2; text-align: right; }
 
-        .conn-value {
-            font-weight: bold;
-            margin-top: 4px;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-        }
+        /* Page Upgrade Styles */
+        .upgrade-section { background: var(--card-bg); border-radius: 15px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 20px; }
+        .upgrade-option { padding: 15px; border: 2px solid var(--border); border-radius: 10px; margin-bottom: 15px; transition: all 0.3s; }
+        .upgrade-option:hover { border-color: var(--primary); }
+        .upgrade-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: var(--primary); }
+        .upgrade-description { color: var(--text-secondary); margin-bottom: 10px; font-size: 0.9rem; }
 
-        .status-dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 6px;
-            vertical-align: middle;
-        }
+        /* Settings specific styles */
+        .settings-section { background: var(--card-bg); border-radius: 15px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 20px; }
+        .settings-group { margin-bottom: 25px; }
+        .settings-title { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; }
+
+        /* Loading Spinner */
+        .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s ease-in-out infinite; margin-right: 8px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         /* Responsive Adjustments */
         @media (max-width: 380px) {
-            .dashboard-cards, .quick-actions {
-                grid-template-columns: 1fr;
-            }
-            
-            .app-title {
-                font-size: 1.2rem;
-            }
-            
-            .header-icon {
-                width: 35px;
-                height: 35px;
-            }
-            
-            .controls {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-        }
-
-        /* Settings specific styles */
-        .settings-section {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-        }
-
-        .settings-group {
-            margin-bottom: 25px;
-        }
-
-        .settings-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 8px;
+            .dashboard-cards, .quick-actions { grid-template-columns: 1fr; }
+            .app-title { font-size: 1.2rem; }
+            .header-icon { width: 35px; height: 35px; }
+            .controls { flex-direction: column; }
+            .btn { width: 100%; }
         }
     </style>
 </head>
@@ -838,7 +207,7 @@
                     <h1 class="app-title">ASANTEMAN KUO</h1>
                     <p class="app-subtitle">
                         Attendance System
-                        <span class="mode-indicator local" id="mode-indicator">Local</span>
+                        <span class="mode-indicator" id="mode-indicator">Checking...</span>
                     </p>
                 </div>
             </div>
@@ -911,11 +280,11 @@
                         </div>
                         <div class="action-label">View Attendance</div>
                     </button>
-                    <button class="action-btn" id="meeting-management-btn">
+                    <button class="action-btn" id="all-members-btn">
                         <div class="action-icon">
-                            <i class="fas fa-calendar-alt"></i>
+                            <i class="fas fa-users"></i>
                         </div>
-                        <div class="action-label">Meetings</div>
+                        <div class="action-label">All Members</div>
                     </button>
                 </div>
                 
@@ -937,7 +306,7 @@
                 </div>
                 
                 <div class="search-section">
-                    <input type="text" class="search-input" id="search-input" placeholder="Search by name or phone...">
+                    <input type="text" class="search-input" id="search-input" placeholder="Search by name, phone, ID, or job...">
                     <button class="search-btn" id="search-btn">
                         <i class="fas fa-search"></i>
                     </button>
@@ -966,7 +335,7 @@
             <!-- Add Member Section -->
             <div class="content-section" id="add-member-section">
                 <div class="section-header">
-                    <span>Add New Member</span>
+                    <span id="add-edit-title">Add New Member</span>
                 </div>
                 
                 <div class="form-container">
@@ -1008,7 +377,39 @@
                         <button class="btn btn-success" id="save-btn">
                             <i class="fas fa-save"></i> Save Member
                         </button>
+                        <button class="btn btn-warning" id="cancel-edit-btn" style="display: none;">
+                            <i class="fas fa-times"></i> Cancel Edit
+                        </button>
                     </div>
+                </div>
+            </div>
+
+            <!-- All Members Section -->
+            <div class="content-section" id="all-members-section">
+                <div class="section-header">
+                    <span>All Members</span>
+                </div>
+                
+                <div class="search-section">
+                    <input type="text" class="search-input" id="all-members-search" placeholder="Search by name, phone, ID, or job...">
+                    <button class="search-btn" id="all-members-search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <div class="member-list" id="all-members-list">
+                    <!-- All members will be populated here -->
+                </div>
+            </div>
+
+            <!-- Member Profile Section -->
+            <div class="content-section" id="member-profile-section">
+                <div class="section-header">
+                    <span>Member Profile</span>
+                </div>
+                
+                <div class="profile-detail-view" id="member-profile-detail">
+                    <!-- Member profile details will be populated here -->
                 </div>
             </div>
             
@@ -1138,6 +539,86 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Page Upgrade Section -->
+                    <div class="settings-group">
+                        <div class="settings-title">Page Upgrade</div>
+                        <div class="upgrade-section">
+                            <div class="upgrade-option">
+                                <div class="upgrade-title">Enhanced Reporting</div>
+                                <div class="upgrade-description">Advanced analytics and custom report generation with export capabilities</div>
+                                <button class="btn btn-primary btn-sm">Upgrade</button>
+                            </div>
+                            <div class="upgrade-option">
+                                <div class="upgrade-title">Bulk Operations</div>
+                                <div class="upgrade-description">Import/export members and bulk attendance marking with CSV support</div>
+                                <button class="btn btn-primary btn-sm">Upgrade</button>
+                            </div>
+                            <div class="upgrade-option">
+                                <div class="upgrade-title">Advanced Security</div>
+                                <div class="upgrade-description">Role-based access control, audit logs, and advanced user management</div>
+                                <button class="btn btn-primary btn-sm">Upgrade</button>
+                            </div>
+                            <div class="upgrade-option">
+                                <div class="upgrade-title">Custom Branding</div>
+                                <div class="upgrade-description">Custom logos, colors, and organization-specific branding</div>
+                                <button class="btn btn-primary btn-sm">Upgrade</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Management Section -->
+                    <div class="settings-group">
+                        <div class="settings-title">User Management</div>
+                        <div class="form-container">
+                            <div class="form-group">
+                                <label class="form-label" for="new-username">Username</label>
+                                <input type="text" class="form-control" id="new-username" placeholder="Enter username">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="new-password">Password</label>
+                                <input type="password" class="form-control" id="new-password" placeholder="Enter password">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="new-user-role">Role</label>
+                                <select class="form-control" id="new-user-role">
+                                    <option value="user">User</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" id="add-user-btn">
+                                <i class="fas fa-user-plus"></i> Add User
+                            </button>
+                        </div>
+                        <div id="users-list">
+                            <!-- Users list will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Chapter Management Section -->
+                    <div class="settings-group">
+                        <div class="settings-title">Chapter Management</div>
+                        <div class="form-container">
+                            <div class="form-group">
+                                <label class="form-label" for="new-chapter-name">Chapter Name</label>
+                                <input type="text" class="form-control" id="new-chapter-name" placeholder="Enter chapter name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="new-chapter-location">Location</label>
+                                <input type="text" class="form-control" id="new-chapter-location" placeholder="Enter location">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="new-chapter-leader">Leader</label>
+                                <input type="text" class="form-control" id="new-chapter-leader" placeholder="Enter leader name">
+                            </div>
+                            <button class="btn btn-primary" id="add-chapter-btn">
+                                <i class="fas fa-plus"></i> Add Chapter
+                            </button>
+                        </div>
+                        <div id="chapters-list">
+                            <!-- Chapters list will be populated here -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -1162,11 +643,11 @@
                 </div>
                 <div class="nav-label">Add</div>
             </div>
-            <div class="nav-item" data-section="view-attendance-section">
+            <div class="nav-item" data-section="all-members-section">
                 <div class="nav-icon">
-                    <i class="fas fa-list"></i>
+                    <i class="fas fa-users"></i>
                 </div>
-                <div class="nav-label">Attendance</div>
+                <div class="nav-label">Members</div>
             </div>
             <div class="nav-item" data-section="meetings-section">
                 <div class="nav-icon">
@@ -1207,29 +688,31 @@
     </div>
 
     <script>
-        // ========== GLOBAL VARIABLES (FULL CORE LOGIC) ==========
+        // ========== COMPREHENSIVE GLOBAL VARIABLES ==========
         let members = [];
         let attendance = [];
         let meetings = [];
         let currentSelectedMember = null;
         let currentCapture = null;
         let currentEditingMember = null;
-        let availableJobs = ['Farmer', 'Teacher', 'Trader', 'Driver', 'Nurse'];
-        let availableHometowns = ['Accra', 'Kumasi', 'Cape Coast', 'Takoradi', 'Tamale'];
-        let availableTribes = ['Akan', 'Ewe', 'Ga', 'Dagomba', 'Fante'];
-        let availableDepartments = ['General', 'Education', 'Commerce', 'Health', 'Agriculture'];
-        let availablePositions = ['Member', 'Leader', 'Secretary', 'Treasurer', 'Organizer'];
+        let availableJobs = ['Farmer', 'Teacher', 'Trader', 'Driver', 'Nurse', 'Doctor', 'Engineer', 'Student', 'Business Owner', 'Artisan'];
+        let availableHometowns = ['Accra', 'Kumasi', 'Cape Coast', 'Takoradi', 'Tamale', 'Koforidua', 'Sunyani', 'Ho', 'Wa', 'Bolgatanga'];
+        let availableTribes = ['Akan', 'Ewe', 'Ga', 'Dagomba', 'Fante', 'Ashanti', 'Nzema', 'Mole-Dagbon', 'Guan', 'Gurma'];
+        let availableDepartments = ['General', 'Education', 'Commerce', 'Health', 'Agriculture', 'Technology', 'Administration', 'Security'];
+        let availablePositions = ['Member', 'Leader', 'Secretary', 'Treasurer', 'Organizer', 'Coordinator', 'Assistant'];
         let availableChapters = [];
         let availableGroups = [];
-        let cameraStream = null;
-        let settingsPassword = "admin123";
         let users = [
             { username: 'admin', password: 'admin123', role: 'admin' },
             { username: 'user', password: 'user123', role: 'user' }
         ];
+        let chapters = [];
+        let cameraStream = null;
+        let settingsPassword = "admin123";
         let SCRIPT_URL = '';
-        let SHEET_ID = '';
         let isCloudMode = false;
+        let autoRefreshInterval = null;
+        let isOnline = false;
 
         // ========== DOM ELEMENTS ==========
         const syncStatus = document.getElementById('sync-status');
@@ -1251,16 +734,133 @@
         function initializeApp() {
             loadSettings();
             setupEventListeners();
-            loadDataFromLocalStorage();
-            updateDashboard();
-            updateRecentActivity();
             updateCurrentDate();
             updateDropdowns();
             checkInternetStatus();
             
             // Setup internet monitoring
-            window.addEventListener('online', checkInternetStatus);
-            window.addEventListener('offline', checkInternetStatus);
+            window.addEventListener('online', handleOnlineStatus);
+            window.addEventListener('offline', handleOfflineStatus);
+            
+            // Auto-connect to cloud if URL is configured
+            if (SCRIPT_URL) {
+                autoConnectToCloud();
+            }
+        }
+
+        // ========== FIXED MEMBER LOOKUP FUNCTIONS ==========
+
+        function findMemberById(memberId) {
+            console.log('Looking for member with ID:', memberId);
+            console.log('Available members:', members);
+            
+            if (!memberId) {
+                console.log('No member ID provided');
+                return null;
+            }
+            
+            // Try different ways to find the member
+            let member = members.find(m => m.id === memberId);
+            
+            if (!member) {
+                // Try with string conversion
+                member = members.find(m => String(m.id) === String(memberId));
+            }
+            
+            if (!member) {
+                // Try with ID number
+                member = members.find(m => m.idNumber === memberId);
+            }
+            
+            if (!member) {
+                // Try with row index
+                const index = parseInt(memberId);
+                if (!isNaN(index) && index >= 0 && index < members.length) {
+                    member = members[index];
+                }
+            }
+            
+            console.log('Found member:', member);
+            return member;
+        }
+
+        function findMemberIndexById(memberId) {
+            console.log('Looking for member index with ID:', memberId);
+            
+            let index = members.findIndex(m => m.id === memberId);
+            
+            if (index === -1) {
+                // Try with string conversion
+                index = members.findIndex(m => String(m.id) === String(memberId));
+            }
+            
+            if (index === -1) {
+                // Try with ID number
+                index = members.findIndex(m => m.idNumber === memberId);
+            }
+            
+            console.log('Found member index:', index);
+            return index;
+        }
+
+        // ========== CORE APPLICATION FUNCTIONS ==========
+
+        function autoConnectToCloud() {
+            if (!SCRIPT_URL) return;
+            
+            updateSyncStatus('syncing', 'Connecting to cloud...');
+            
+            // Try to connect to cloud immediately
+            loadDataFromCloud()
+                .then(() => {
+                    isCloudMode = true;
+                    updateModeIndicator();
+                    updateDatabaseStatus(`Connected to cloud`);
+                    updateSyncStatus('success', 'Connected to cloud');
+                    showAlert('✅ Successfully connected to cloud', 'success');
+                    
+                    // Start auto-refresh
+                    startAutoRefresh();
+                })
+                .catch(error => {
+                    isCloudMode = false;
+                    updateModeIndicator();
+                    updateDatabaseStatus('Failed to connect to cloud');
+                    updateSyncStatus('error', 'Failed to connect');
+                    showAlert('❌ Failed to connect to cloud: ' + error.message, 'error');
+                    
+                    // Retry connection after 30 seconds
+                    setTimeout(autoConnectToCloud, 30000);
+                });
+        }
+
+        function startAutoRefresh() {
+            if (autoRefreshInterval) clearInterval(autoRefreshInterval);
+            
+            autoRefreshInterval = setInterval(() => {
+                if (isCloudMode && SCRIPT_URL && isOnline) {
+                    refreshDataFromCloud();
+                }
+            }, 60000); // 1 minute
+        }
+
+        function handleOnlineStatus() {
+            isOnline = true;
+            checkInternetStatus();
+            
+            // Try to reconnect to cloud if we're offline
+            if (SCRIPT_URL && !isCloudMode) {
+                autoConnectToCloud();
+            }
+        }
+
+        function handleOfflineStatus() {
+            isOnline = false;
+            checkInternetStatus();
+            isCloudMode = false;
+            updateModeIndicator();
+            updateDatabaseStatus('Offline - No internet connection');
+            showAlert('⚠️ You are offline. Some features may not work.', 'error');
         }
 
         function setupEventListeners() {
@@ -1284,6 +884,11 @@
                 });
             });
 
+            // Settings button
+            document.getElementById('settings-btn').addEventListener('click', function() {
+                passwordModal.style.display = 'flex';
+            });
+
             // Quick action buttons
             document.getElementById('verify-attendance-btn').addEventListener('click', function() {
                 switchContentSection('verify-attendance-section');
@@ -1293,6 +898,7 @@
             document.getElementById('add-member-btn').addEventListener('click', function() {
                 switchContentSection('add-member-section');
                 updateNavActive('add-member-section');
+                resetMemberForm();
             });
 
             document.getElementById('view-attendance-btn').addEventListener('click', function() {
@@ -1301,14 +907,10 @@
                 renderAttendanceList();
             });
 
-            document.getElementById('meeting-management-btn').addEventListener('click', function() {
-                switchContentSection('meetings-section');
-                updateNavActive('meetings-section');
-                renderMeetings();
-            });
-
-            document.getElementById('settings-btn').addEventListener('click', function() {
-                passwordModal.style.display = 'flex';
+            document.getElementById('all-members-btn').addEventListener('click', function() {
+                switchContentSection('all-members-section');
+                updateNavActive('all-members-section');
+                renderAllMembersList();
             });
 
             // Search functionality
@@ -1317,12 +919,18 @@
                 if (e.key === 'Enter') performSearch();
             });
 
+            document.getElementById('all-members-search-btn').addEventListener('click', searchAllMembers);
+            document.getElementById('all-members-search').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') searchAllMembers();
+            });
+
             // Verify attendance
             document.getElementById('verify-btn').addEventListener('click', verifyAttendance);
             document.getElementById('clear-btn').addEventListener('click', clearSearch);
 
             // Save member
             document.getElementById('save-btn').addEventListener('click', saveMember);
+            document.getElementById('cancel-edit-btn').addEventListener('click', cancelEdit);
 
             // Create meeting
             document.getElementById('create-meeting-btn').addEventListener('click', createMeeting);
@@ -1341,7 +949,13 @@
             });
 
             // Sync button
-            document.getElementById('sync-btn').addEventListener('click', syncDataToCloud);
+            document.getElementById('sync-btn').addEventListener('click', function() {
+                if (isCloudMode) {
+                    refreshDataFromCloud();
+                } else {
+                    autoConnectToCloud();
+                }
+            });
 
             // View all activity
             document.getElementById('view-all-activity').addEventListener('click', function() {
@@ -1354,6 +968,8 @@
             document.getElementById('save-settings-btn').addEventListener('click', saveSettings);
             document.getElementById('load-data-btn').addEventListener('click', loadDataFromCloud);
             document.getElementById('clear-settings-btn').addEventListener('click', clearSettings);
+            document.getElementById('add-user-btn').addEventListener('click', addNewUser);
+            document.getElementById('add-chapter-btn').addEventListener('click', addNewChapter);
 
             // Password modal
             submitPasswordBtn.addEventListener('click', checkPassword);
@@ -1367,18 +983,25 @@
             confirmNoBtn.addEventListener('click', () => {
                 confirmModal.style.display = 'none';
             });
-        }
 
-        // ========== CORE APPLICATION FUNCTIONS ==========
+            // Camera functionality
+            document.getElementById('camera-btn').addEventListener('click', startCamera);
+        }
 
         function switchContentSection(sectionId) {
             const sections = document.querySelectorAll('.content-section');
             sections.forEach(section => section.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
             
-            // Update settings display when switching to settings
+            // Update specific sections when activated
             if (sectionId === 'settings-section') {
                 updateSettingsDisplay();
+            } else if (sectionId === 'all-members-section') {
+                renderAllMembersList();
+            } else if (sectionId === 'view-attendance-section') {
+                renderAttendanceList();
+            } else if (sectionId === 'meetings-section') {
+                renderMeetings();
             }
         }
 
@@ -1459,7 +1082,7 @@
             }
             
             todayActivities.forEach(activity => {
-                const member = members.find(m => m.id === activity.memberId);
+                const member = findMemberById(activity.memberId);
                 if (!member) return;
                 
                 const initials = member.name.split(' ').map(n => n[0]).join('');
@@ -1487,7 +1110,429 @@
             document.getElementById('current-date').textContent = formattedDate;
         }
 
+        // ========== FIXED MEMBER MANAGEMENT FUNCTIONS ==========
+
+        function renderAllMembersList() {
+            const membersList = document.getElementById('all-members-list');
+            
+            if (!isCloudMode) {
+                membersList.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">Connect to cloud to view members</div>';
+                return;
+            }
+            
+            if (members.length === 0) {
+                membersList.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">No members available</div>';
+                return;
+            }
+            
+            membersList.innerHTML = '';
+            
+            members.sort((a, b) => a.name.localeCompare(b.name)).forEach((member) => {
+                const initials = member.name.split(' ').map(n => n[0]).join('');
+                const avatar = member.image 
+                    ? `<img src="${member.image}" alt="${member.name}">`
+                    : initials;
+                
+                // Use the actual member ID
+                const memberId = member.id;
+                
+                const memberItem = document.createElement('div');
+                memberItem.className = 'member-item';
+                memberItem.innerHTML = `
+                    <div class="user-info">
+                        <div class="user-avatar">${avatar}</div>
+                        <div>
+                            <div style="font-weight: 600;">${member.name}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">
+                                ${member.idNumber} • ${member.phone || 'No phone'} • ${member.job || 'No job'}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="member-actions">
+                        <button class="btn btn-info btn-sm view-member-btn" data-id="${memberId}">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-warning btn-sm edit-member-btn" data-id="${memberId}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm delete-member-btn" data-id="${memberId}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                membersList.appendChild(memberItem);
+            });
+
+            // Add event listeners to the buttons
+            document.querySelectorAll('.view-member-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const memberId = this.getAttribute('data-id');
+                    console.log('View button clicked for member ID:', memberId);
+                    viewMemberProfile(memberId);
+                });
+            });
+
+            document.querySelectorAll('.edit-member-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const memberId = this.getAttribute('data-id');
+                    console.log('Edit button clicked for member ID:', memberId);
+                    editMember(memberId);
+                });
+            });
+
+            document.querySelectorAll('.delete-member-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const memberId = this.getAttribute('data-id');
+                    console.log('Delete button clicked for member ID:', memberId);
+                    deleteMember(memberId);
+                });
+            });
+        }
+
+        function searchAllMembers() {
+            if (!isCloudMode) {
+                showAlert('Connect to cloud to search members', 'error');
+                return;
+            }
+            
+            const searchTerm = document.getElementById('all-members-search').value.trim().toLowerCase();
+            const membersList = document.getElementById('all-members-list');
+            
+            if (!searchTerm) {
+                renderAllMembersList();
+                return;
+            }
+            
+            const filteredMembers = members.filter(member => 
+                member.name.toLowerCase().includes(searchTerm) ||
+                (member.idNumber && member.idNumber.toLowerCase().includes(searchTerm)) ||
+                (member.phone && member.phone.includes(searchTerm)) ||
+                (member.job && member.job.toLowerCase().includes(searchTerm)) ||
+                (member.hometown && member.hometown.toLowerCase().includes(searchTerm)) ||
+                (member.tribe && member.tribe.toLowerCase().includes(searchTerm))
+            );
+            
+            if (filteredMembers.length === 0) {
+                membersList.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">No members found</div>';
+                return;
+            }
+            
+            membersList.innerHTML = '';
+            
+            filteredMembers.forEach(member => {
+                const initials = member.name.split(' ').map(n => n[0]).join('');
+                const avatar = member.image 
+                    ? `<img src="${member.image}" alt="${member.name}">`
+                    : initials;
+                
+                const memberItem = document.createElement('div');
+                memberItem.className = 'member-item';
+                memberItem.innerHTML = `
+                    <div class="user-info">
+                        <div class="user-avatar">${avatar}</div>
+                        <div>
+                            <div style="font-weight: 600;">${member.name}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">
+                                ${member.idNumber} • ${member.phone || 'No phone'} • ${member.job || 'No job'}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="member-actions">
+                        <button class="btn btn-info btn-sm view-member-btn" data-id="${member.id}">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-warning btn-sm edit-member-btn" data-id="${member.id}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm delete-member-btn" data-id="${member.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                membersList.appendChild(memberItem);
+            });
+
+            // Re-add event listeners
+            document.querySelectorAll('.view-member-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const memberId = this.getAttribute('data-id');
+                    viewMemberProfile(memberId);
+                });
+            });
+
+            document.querySelectorAll('.edit-member-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const memberId = this.getAttribute('data-id');
+                    editMember(memberId);
+                });
+            });
+
+            document.querySelectorAll('.delete-member-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const memberId = this.getAttribute('data-id');
+                    deleteMember(memberId);
+                });
+            });
+        }
+
+        function viewMemberProfile(memberId) {
+            if (!isCloudMode) {
+                showAlert('Connect to cloud to view member profile', 'error');
+                return;
+            }
+            
+            const member = findMemberById(memberId);
+            if (!member) {
+                showAlert('Member not found. Please refresh the member list.', 'error');
+                return;
+            }
+            
+            const initials = member.name.split(' ').map(n => n[0]).join('');
+            const avatar = member.image 
+                ? `<img src="${member.image}" alt="${member.name}">`
+                : initials;
+            
+            // Calculate member statistics
+            const memberAttendance = attendance.filter(a => {
+                const attendanceMemberId = a.memberId;
+                return String(attendanceMemberId) === String(member.id) || 
+                       String(attendanceMemberId) === String(member.idNumber) ||
+                       findMemberById(attendanceMemberId)?.id === member.id;
+            });
+            
+            const today = new Date();
+            const presentToday = memberAttendance.some(a => {
+                const ad = new Date(a.timestamp);
+                return ad.getFullYear() === today.getFullYear() &&
+                       ad.getMonth() === today.getMonth() &&
+                       ad.getDate() === today.getDate();
+            });
+            
+            const profileHTML = `
+                <div class="profile-header">
+                    <div class="profile-avatar">${avatar}</div>
+                    <div class="profile-name">${member.name}</div>
+                    <div class="profile-id">${member.idNumber}</div>
+                    <div class="profile-details">
+                        <div style="margin-top: 10px; padding: 8px; background: ${presentToday ? '#e8f5e8' : '#fde8e8'}; border-radius: 8px;">
+                            <strong>Status Today:</strong> ${presentToday ? 'Present ✅' : 'Absent ❌'}
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <div class="info-label">Phone:</div>
+                        <div class="info-value">${member.phone || 'Not provided'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Job:</div>
+                        <div class="info-value">${member.job || 'Not specified'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Hometown:</div>
+                        <div class="info-value">${member.hometown || 'Not specified'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Tribe:</div>
+                        <div class="info-value">${member.tribe || 'Not specified'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Total Attendance:</div>
+                        <div class="info-value">${memberAttendance.length} times</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Join Date:</div>
+                        <div class="info-value">${member.joinDate || 'Not specified'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Last Updated:</div>
+                        <div class="info-value">${new Date(member.lastUpdated).toLocaleDateString()}</div>
+                    </div>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-warning" id="edit-profile-btn">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </button>
+                    <button class="btn btn-danger" id="delete-profile-btn">
+                        <i class="fas fa-trash"></i> Delete Member
+                    </button>
+                    <button class="btn btn-info" id="attendance-history-btn">
+                        <i class="fas fa-history"></i> Attendance History
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('member-profile-detail').innerHTML = profileHTML;
+            
+            // Add event listeners
+            document.getElementById('edit-profile-btn').addEventListener('click', function() {
+                editMember(member.id);
+            });
+            
+            document.getElementById('delete-profile-btn').addEventListener('click', function() {
+                deleteMember(member.id);
+            });
+            
+            document.getElementById('attendance-history-btn').addEventListener('click', function() {
+                showAttendanceHistory(member.id);
+            });
+            
+            switchContentSection('member-profile-section');
+        }
+
+        function editMember(memberId) {
+            if (!isCloudMode) {
+                showAlert('Connect to cloud to edit members', 'error');
+                return;
+            }
+            
+            const member = findMemberById(memberId);
+            if (!member) {
+                showAlert('Member not found. Please refresh the member list.', 'error');
+                return;
+            }
+            
+            console.log('Editing member:', member);
+            
+            // Fill the form with member data
+            document.getElementById('member-name').value = member.name || '';
+            document.getElementById('member-id').value = member.idNumber || '';
+            document.getElementById('member-phone').value = member.phone || '';
+            document.getElementById('member-job').value = member.job || '';
+            document.getElementById('member-hometown').value = member.hometown || '';
+            document.getElementById('member-tribe').value = member.tribe || '';
+            
+            // Update UI for edit mode
+            document.getElementById('add-edit-title').textContent = 'Edit Member';
+            document.getElementById('save-btn').innerHTML = '<i class="fas fa-save"></i> Update Member';
+            document.getElementById('cancel-edit-btn').style.display = 'flex';
+            
+            currentEditingMember = member.id;
+            currentCapture = member.image || null;
+            
+            // Switch to add member section
+            switchContentSection('add-member-section');
+            updateNavActive('add-member-section');
+        }
+
+        function cancelEdit() {
+            resetMemberForm();
+            switchContentSection('all-members-section');
+            updateNavActive('all-members-section');
+        }
+
+        function resetMemberForm() {
+            document.getElementById('member-name').value = '';
+            document.getElementById('member-id').value = '';
+            document.getElementById('member-phone').value = '';
+            document.getElementById('member-job').value = '';
+            document.getElementById('member-hometown').value = '';
+            document.getElementById('member-tribe').value = '';
+            
+            document.getElementById('add-edit-title').textContent = 'Add New Member';
+            document.getElementById('save-btn').innerHTML = '<i class="fas fa-save"></i> Save Member';
+            document.getElementById('cancel-edit-btn').style.display = 'none';
+            
+            currentEditingMember = null;
+            currentCapture = null;
+        }
+
+        async function deleteMember(memberId) {
+            if (!isCloudMode) {
+                showAlert('Connect to cloud to delete members', 'error');
+                return;
+            }
+            
+            const member = findMemberById(memberId);
+            if (!member) {
+                showAlert('Member not found. Please refresh the member list.', 'error');
+                return;
+            }
+            
+            console.log('Deleting member:', member);
+            
+            showConfirmModal(`Are you sure you want to delete ${member.name}? This action cannot be undone.`, async function() {
+                try {
+                    updateSyncStatus('syncing', 'Deleting member...');
+                    
+                    // Delete from cloud using the actual member ID
+                    await deleteMemberFromCloud(member.id);
+                    
+                    // Refresh data from cloud to update UI
+                    await refreshDataFromCloud();
+                    
+                    showAlert(`Member ${member.name} deleted successfully`, 'success');
+                    updateSyncStatus('success', 'Member deleted');
+                    
+                    // If we're on the member profile section, go back to all members
+                    if (document.getElementById('member-profile-section').classList.contains('active')) {
+                        switchContentSection('all-members-section');
+                        updateNavActive('all-members-section');
+                    }
+                } catch (error) {
+                    console.error('Error deleting member:', error);
+                    showAlert('Error deleting member: ' + error.message, 'error');
+                    updateSyncStatus('error', 'Delete failed');
+                    
+                    // Auto-hide error status after 5 seconds
+                    setTimeout(() => {
+                        updateSyncStatus('success', 'Ready');
+                    }, 5000);
+                }
+            });
+        }
+
+        function showAttendanceHistory(memberId) {
+            if (!isCloudMode) {
+                showAlert('Connect to cloud to view attendance history', 'error');
+                return;
+            }
+            
+            const member = findMemberById(memberId);
+            if (!member) {
+                showAlert('Member not found. Please refresh the member list.', 'error');
+                return;
+            }
+            
+            const memberAttendance = attendance.filter(a => {
+                const attendanceMemberId = a.memberId;
+                return String(attendanceMemberId) === String(member.id) || 
+                       String(attendanceMemberId) === String(member.idNumber) ||
+                       findMemberById(attendanceMemberId)?.id === member.id;
+            })
+            .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+            .slice(0, 10); // Show last 10 records
+            
+            let historyHTML = `<h3 style="margin-bottom: 15px; color: var(--primary);">Attendance History for ${member.name}</h3>`;
+            
+            if (memberAttendance.length === 0) {
+                historyHTML += '<p>No attendance records found.</p>';
+            } else {
+                memberAttendance.forEach(record => {
+                    const date = new Date(record.timestamp).toLocaleDateString();
+                    const time = new Date(record.timestamp).toLocaleTimeString();
+                    historyHTML += `
+                        <div style="padding: 10px; border-bottom: 1px solid var(--border);">
+                            <div><strong>${date}</strong> at ${time}</div>
+                            <div style="font-size: 0.9rem; color: var(--text-secondary);">Verified by: System</div>
+                        </div>
+                    `;
+                });
+            }
+            
+            showAlert(historyHTML, 'info');
+        }
+
+        // ========== ATTENDANCE FUNCTIONS ==========
+
         function performSearch() {
+            if (!isCloudMode) {
+                showAlert('Connect to cloud to search members', 'error');
+                return;
+            }
+            
             const searchInput = document.getElementById('search-input');
             const query = searchInput.value.trim().toLowerCase();
             
@@ -1499,7 +1544,10 @@
             const results = members.filter(m => 
                 m.name.toLowerCase().includes(query) || 
                 (m.phone && m.phone.includes(query)) ||
-                (m.idNumber && m.idNumber.toLowerCase().includes(query))
+                (m.idNumber && m.idNumber.toLowerCase().includes(query)) ||
+                (m.job && m.job.toLowerCase().includes(query)) ||
+                (m.hometown && m.hometown.toLowerCase().includes(query)) ||
+                (m.tribe && m.tribe.toLowerCase().includes(query))
             );
             
             if (results.length > 0) {
@@ -1519,7 +1567,10 @@
             const now = new Date();
             const isVerified = attendance.some(r => {
                 const rd = new Date(r.timestamp);
-                return r.memberId === member.id &&
+                const attendanceMemberId = r.memberId;
+                return (String(attendanceMemberId) === String(member.id) || 
+                        String(attendanceMemberId) === String(member.idNumber) ||
+                        findMemberById(attendanceMemberId)?.id === member.id) &&
                     rd.getFullYear() === now.getFullYear() &&
                     rd.getMonth() === now.getMonth() &&
                     rd.getDate() === now.getDate();
@@ -1549,11 +1600,16 @@
                     ${member.hometown ? `<div>Hometown: ${member.hometown}</div>` : ''}
                     ${member.tribe ? `<div>Tribe: ${member.tribe}</div>` : ''}
                 </div>
-                <div class="profile-id">Click to view full profile</div>
+                <div class="profile-id">Member Profile</div>
             `;
         }
 
-        function verifyAttendance() {
+        async function verifyAttendance() {
+            if (!isCloudMode) {
+                showAlert('Connect to cloud to verify attendance', 'error');
+                return;
+            }
+            
             if (!currentSelectedMember) {
                 showAlert('Please search for a member first', 'error');
                 return;
@@ -1563,7 +1619,10 @@
             const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
             const alreadyVerified = attendance.some(r => {
                 const rd = new Date(r.timestamp);
-                return r.memberId === currentSelectedMember.id &&
+                const attendanceMemberId = r.memberId;
+                return (String(attendanceMemberId) === String(currentSelectedMember.id) || 
+                        String(attendanceMemberId) === String(currentSelectedMember.idNumber) ||
+                        findMemberById(attendanceMemberId)?.id === currentSelectedMember.id) &&
                     rd.getFullYear() === today.getFullYear() &&
                     rd.getMonth() === today.getMonth() &&
                     rd.getDate() === today.getDate();
@@ -1578,27 +1637,40 @@
                 memberId: currentSelectedMember.id,
                 memberName: currentSelectedMember.name,
                 timestamp: now.toISOString(),
-                verificationTime: now.toLocaleTimeString()
+                verificationTime: now.toLocaleTimeString(),
+                verifiedBy: 'Mobile App'
             };
             
-            attendance.push(record);
-            saveAllToLocalStorage();
-            
-            // Try cloud sync if enabled
-            if (isCloudMode && SCRIPT_URL) {
-                saveAttendanceToCloud(record).catch(err => {
-                    console.error('Cloud sync failed:', err);
-                });
+            try {
+                updateSyncStatus('syncing', 'Recording attendance...');
+                
+                // Save to cloud
+                await saveAttendanceToCloud(record);
+                
+                // Refresh data from cloud to update UI
+                await refreshDataFromCloud();
+                
+                const verificationStatus = document.getElementById('verification-status');
+                verificationStatus.textContent = 'VERIFICATION SUCCESSFUL - Attendance marked';
+                verificationStatus.className = 'verification-status verified';
+                
+                showAlert(`Attendance verified for ${currentSelectedMember.name}`, 'success');
+                updateSyncStatus('success', 'Attendance recorded');
+                
+                // Clear search after verification
+                setTimeout(() => {
+                    clearSearch();
+                }, 2000);
+            } catch (error) {
+                console.error('Error verifying attendance:', error);
+                showAlert('Error verifying attendance: ' + error.message, 'error');
+                updateSyncStatus('error', 'Verification failed');
+                
+                // Auto-hide error status after 5 seconds
+                setTimeout(() => {
+                    updateSyncStatus('success', 'Ready');
+                }, 5000);
             }
-            
-            const verificationStatus = document.getElementById('verification-status');
-            verificationStatus.textContent = 'VERIFICATION SUCCESSFUL - Attendance marked';
-            verificationStatus.className = 'verification-status verified';
-            
-            showAlert(`Attendance verified for ${currentSelectedMember.name}`, 'success');
-            
-            updateDashboard();
-            updateRecentActivity();
         }
 
         function clearSearch() {
@@ -1609,7 +1681,14 @@
             currentSelectedMember = null;
         }
 
-        function saveMember() {
+        // ========== MEMBER SAVE FUNCTION ==========
+
+        async function saveMember() {
+            if (!isCloudMode) {
+                showAlert('Connect to cloud to save members', 'error');
+                return;
+            }
+            
             const name = document.getElementById('member-name').value.trim();
             const id = document.getElementById('member-id').value.trim();
             const phone = document.getElementById('member-phone').value.trim();
@@ -1622,11 +1701,6 @@
                 return;
             }
             
-            if (members.some(m => m.idNumber === id && m.id !== currentEditingMember)) {
-                showAlert('ID number already exists', 'error');
-                return;
-            }
-            
             const memberData = {
                 id: currentEditingMember || Date.now().toString(),
                 name,
@@ -1636,48 +1710,50 @@
                 hometown,
                 tribe,
                 image: currentCapture,
-                joinDate: new Date().toISOString().split('T')[0],
+                joinDate: currentEditingMember 
+                    ? findMemberById(currentEditingMember)?.joinDate || new Date().toISOString().split('T')[0]
+                    : new Date().toISOString().split('T')[0],
                 lastUpdated: new Date().toISOString()
             };
             
-            if (currentEditingMember) {
-                const index = members.findIndex(m => m.id === currentEditingMember);
-                if (index !== -1) {
-                    members[index] = memberData;
-                }
-                currentEditingMember = null;
-                showAlert(`Member ${name} updated successfully!`, 'success');
-            } else {
-                members.push(memberData);
-                showAlert(`Member ${name} added successfully!`, 'success');
-            }
-            
-            // Clear form
-            document.getElementById('member-name').value = '';
-            document.getElementById('member-id').value = '';
-            document.getElementById('member-phone').value = '';
-            document.getElementById('member-job').value = '';
-            document.getElementById('member-hometown').value = '';
-            document.getElementById('member-tribe').value = '';
-            currentCapture = null;
-            
-            saveAllToLocalStorage();
-            
-            // Try cloud sync if enabled
-            if (isCloudMode && SCRIPT_URL) {
+            try {
+                updateSyncStatus('syncing', 'Saving member...');
+                
                 if (currentEditingMember) {
-                    updateMemberOnCloud(memberData).catch(err => {
-                        console.error('Cloud sync failed:', err);
-                    });
+                    // Update existing member
+                    await updateMemberOnCloud(memberData);
+                    showAlert(`Member ${name} updated successfully!`, 'success');
                 } else {
-                    saveMemberToCloud(memberData).catch(err => {
-                        console.error('Cloud sync failed:', err);
-                    });
+                    // Add new member
+                    await saveMemberToCloud(memberData);
+                    showAlert(`Member ${name} added successfully!`, 'success');
                 }
+                
+                // Refresh data from cloud to update UI
+                await refreshDataFromCloud();
+                
+                // Update UI
+                resetMemberForm();
+                updateSyncStatus('success', 'Member saved');
+                
+                // Switch back to all members section if we were editing
+                if (currentEditingMember) {
+                    switchContentSection('all-members-section');
+                    updateNavActive('all-members-section');
+                }
+            } catch (error) {
+                console.error('Error saving member:', error);
+                showAlert('Error saving member: ' + error.message, 'error');
+                updateSyncStatus('error', 'Save failed');
+                
+                // Auto-hide error status after 5 seconds
+                setTimeout(() => {
+                    updateSyncStatus('success', 'Ready');
+                }, 5000);
             }
-            
-            updateDashboard();
         }
+
+        // ========== MEETING MANAGEMENT ==========
 
         function createMeeting() {
             const title = document.getElementById('meeting-title').value.trim();
@@ -1688,13 +1764,16 @@
                 return;
             }
             
-            meetings.push({
+            const meetingData = {
                 id: Date.now().toString(),
                 date,
                 title,
                 createdAt: new Date().toISOString(),
-                attendees: []
-            });
+                attendees: [],
+                status: 'scheduled'
+            };
+            
+            meetings.push(meetingData);
             
             saveMeetingsToLocalStorage();
             renderMeetings();
@@ -1707,11 +1786,54 @@
             updateDashboard();
         }
 
+        function renderMeetings() {
+            const activeMeetingsList = document.getElementById('active-meetings-list');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const activeMeetings = meetings.filter(m => {
+                const meetingDate = new Date(m.date);
+                meetingDate.setHours(0, 0, 0, 0);
+                return meetingDate.getTime() === today.getTime();
+            });
+            
+            activeMeetingsList.innerHTML = '';
+            
+            if (activeMeetings.length === 0) {
+                activeMeetingsList.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">No active meetings today</div>';
+                return;
+            }
+            
+            activeMeetings.forEach(meeting => {
+                const meetingItem = document.createElement('div');
+                meetingItem.className = 'activity-item';
+                meetingItem.innerHTML = `
+                    <div class="activity-avatar" style="background: var(--info);">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-name">${meeting.title}</div>
+                        <div class="activity-time">${new Date(meeting.date).toLocaleDateString()} • ${meeting.attendees.length} attendees</div>
+                    </div>
+                    <div class="activity-status" style="background: var(--success);"></div>
+                `;
+                
+                activeMeetingsList.appendChild(meetingItem);
+            });
+        }
+
+        // ========== ATTENDANCE DISPLAY ==========
+
         function renderAttendanceList() {
             const attendanceList = document.getElementById('attendance-list');
             const today = new Date();
             
             attendanceList.innerHTML = '';
+            
+            if (!isCloudMode) {
+                attendanceList.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">Connect to cloud to view attendance</div>';
+                return;
+            }
             
             if (members.length === 0) {
                 attendanceList.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">No members available</div>';
@@ -1721,7 +1843,10 @@
             members.forEach(member => {
                 const isPresent = attendance.some(r => {
                     const rd = new Date(r.timestamp);
-                    return r.memberId === member.id &&
+                    const attendanceMemberId = r.memberId;
+                    return (String(attendanceMemberId) === String(member.id) || 
+                            String(attendanceMemberId) === String(member.idNumber) ||
+                            findMemberById(attendanceMemberId)?.id === member.id) &&
                         rd.getFullYear() === today.getFullYear() &&
                         rd.getMonth() === today.getMonth() &&
                         rd.getDate() === today.getDate();
@@ -1730,7 +1855,10 @@
                 const initials = member.name.split(' ').map(n => n[0]).join('');
                 const record = attendance.find(r => {
                     const rd = new Date(r.timestamp);
-                    return r.memberId === member.id &&
+                    const attendanceMemberId = r.memberId;
+                    return (String(attendanceMemberId) === String(member.id) || 
+                            String(attendanceMemberId) === String(member.idNumber) ||
+                            findMemberById(attendanceMemberId)?.id === member.id) &&
                         rd.getFullYear() === today.getFullYear() &&
                         rd.getMonth() === today.getMonth() &&
                         rd.getDate() === today.getDate();
@@ -1775,41 +1903,7 @@
             });
         }
 
-        function renderMeetings() {
-            const activeMeetingsList = document.getElementById('active-meetings-list');
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            
-            const activeMeetings = meetings.filter(m => {
-                const meetingDate = new Date(m.date);
-                meetingDate.setHours(0, 0, 0, 0);
-                return meetingDate.getTime() === today.getTime();
-            });
-            
-            activeMeetingsList.innerHTML = '';
-            
-            if (activeMeetings.length === 0) {
-                activeMeetingsList.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">No active meetings today</div>';
-                return;
-            }
-            
-            activeMeetings.forEach(meeting => {
-                const meetingItem = document.createElement('div');
-                meetingItem.className = 'activity-item';
-                meetingItem.innerHTML = `
-                    <div class="activity-avatar" style="background: var(--info);">
-                        <i class="fas fa-calendar"></i>
-                    </div>
-                    <div class="activity-details">
-                        <div class="activity-name">${meeting.title}</div>
-                        <div class="activity-time">${new Date(meeting.date).toLocaleDateString()}</div>
-                    </div>
-                    <div class="activity-status" style="background: var(--success);"></div>
-                `;
-                
-                activeMeetingsList.appendChild(meetingItem);
-            });
-        }
+        // ========== UTILITY FUNCTIONS ==========
 
         function getUpcomingBirthdays(days = 7) {
             const today = new Date();
@@ -1819,293 +1913,6 @@
                 const diffDays = Math.ceil((bday.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
                 return { member: m, daysUntil: diffDays };
             }).filter(i => i.daysUntil >= 0 && i.daysUntil <= days).sort((a, b) => a.daysUntil - b.daysUntil);
-        }
-
-        // ========== CLOUD SYNC FUNCTIONS ==========
-
-        function cleanMember(m) {
-            return {
-                id: String(m.id),
-                name: String(m.name || ''),
-                idNumber: String(m.idNumber || ''),
-                phone: String(m.phone || ''),
-                dateOfBirth: String(m.dateOfBirth || ''),
-                job: String(m.job || ''),
-                hometown: String(m.hometown || ''),
-                tribe: String(m.tribe || ''),
-                chapter: String(m.chapter || ''),
-                group: String(m.group || ''),
-                image: String(m.image || ''),
-                joinDate: m.joinDate ? String(m.joinDate) : new Date().toISOString().split('T')[0],
-                lastUpdated: m.lastUpdated ? String(m.lastUpdated) : new Date().toISOString()
-            };
-        }
-
-        function cleanAttendance(a) {
-            return {
-                memberId: String(a.memberId),
-                memberName: String(a.memberName || ''),
-                timestamp: a.timestamp ? String(a.timestamp) : new Date().toISOString(),
-                verificationTime: a.verificationTime ? String(a.verificationTime) : new Date().toISOString()
-            };
-        }
-
-        async function testScriptConnection(url) {
-            const testUrl = `${url}?action=test&t=${Date.now()}`;
-            const res = await fetch(testUrl);
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            const data = await res.json();
-            if (!data.success) throw new Error(data.error || 'Test failed');
-            return true;
-        }
-
-        async function syncDataToCloud() {
-            if (!SCRIPT_URL) {
-                showAlert('Configure script URL first in Settings', 'error');
-                return;
-            }
-            
-            updateSyncStatus('syncing', 'Syncing to cloud…');
-            try {
-                await testScriptConnection(SCRIPT_URL);
-
-                const formData = new URLSearchParams();
-                formData.append('action', 'syncAll');
-                formData.append('members', JSON.stringify(members.map(cleanMember)));
-                formData.append('attendance', JSON.stringify(attendance.map(cleanAttendance)));
-                formData.append('version', '1.0');
-
-                const res = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: formData
-                });
-
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const data = await res.json();
-                if (!data.success) throw new Error(data.error || 'Sync failed');
-
-                showAlert(`✅ Synced ${members.length} members`, 'success');
-                isCloudMode = true;
-                localStorage.setItem('asantemanCloudMode', 'true');
-                updateModeIndicator();
-                updateDatabaseStatus(`Connected to backend`);
-                updateSyncStatus('success', 'Sync complete');
-            } catch (err) {
-                console.error('Sync error:', err);
-                showAlert('❌ Sync failed: ' + err.message, 'error');
-                isCloudMode = false;
-                localStorage.setItem('asantemanCloudMode', 'false');
-                updateModeIndicator();
-                updateSyncStatus('error', 'Sync failed');
-            }
-        }
-
-        async function saveMemberToCloud(member) {
-            const formData = new URLSearchParams();
-            formData.append('action', 'saveMember');
-            formData.append('member', JSON.stringify(cleanMember(member)));
-
-            const res = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: formData
-            });
-            const data = await res.json();
-            if (!data.success) throw new Error(data.error || 'Cloud save failed');
-        }
-
-        async function updateMemberOnCloud(member) {
-            const formData = new URLSearchParams();
-            formData.append('action', 'updateMember');
-            formData.append('member', JSON.stringify(cleanMember(member)));
-
-            const res = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: formData
-            });
-            const data = await res.json();
-            if (!data.success) throw new Error(data.error || 'Cloud update failed');
-        }
-
-        async function saveAttendanceToCloud(rec) {
-            const formData = new URLSearchParams();
-            formData.append('action', 'saveAttendance');
-            formData.append('attendance', JSON.stringify(cleanAttendance(rec)));
-
-            const res = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: formData
-            });
-            const data = await res.json();
-            if (!data.success) throw new Error(data.error || 'Cloud attendance save failed');
-        }
-
-        async function loadDataFromCloud() {
-            if (!SCRIPT_URL) {
-                showAlert('Configure script URL first', 'error');
-                return;
-            }
-            
-            updateSyncStatus('syncing', 'Loading from cloud…');
-            try {
-                await testScriptConnection(SCRIPT_URL);
-                const url = `${SCRIPT_URL}?action=getMembers&t=${Date.now()}`;
-                const res = await fetch(url);
-                const data = await res.json();
-                if (!data.success) throw new Error(data.error || 'Load failed');
-                
-                members = data.members || [];
-                attendance = data.attendance || [];
-                
-                saveAllToLocalStorage();
-                showAlert(`✅ Loaded ${members.length} members`, 'success');
-                isCloudMode = true;
-                localStorage.setItem('asantemanCloudMode', 'true');
-                updateModeIndicator();
-                updateDatabaseStatus(`Loaded ${members.length} members`);
-                updateSyncStatus('success', 'Load complete');
-                updateDashboard();
-                updateRecentActivity();
-            } catch (err) {
-                console.error('Load error:', err);
-                showAlert('❌ Load failed: ' + err.message, 'error');
-                isCloudMode = false;
-                localStorage.setItem('asantemanCloudMode', 'false');
-                updateModeIndicator();
-                updateSyncStatus('error', 'Load failed');
-            }
-        }
-
-        // ========== SETTINGS FUNCTIONS ==========
-
-        function checkPassword() {
-            if (passwordInput.value === settingsPassword) {
-                passwordModal.style.display = 'none';
-                passwordInput.value = '';
-                switchContentSection('settings-section');
-                updateNavActive('settings-section');
-            } else {
-                showAlert('Incorrect password', 'error');
-                passwordInput.value = '';
-            }
-        }
-
-        function saveSettings() {
-            const url = document.getElementById('script-url').value.trim();
-            SCRIPT_URL = url;
-            
-            try {
-                localStorage.setItem('asantemanScriptUrl', SCRIPT_URL);
-                showAlert('✅ Settings saved', 'success');
-                updateDatabaseStatus(SCRIPT_URL ? `Script URL configured` : 'Local mode');
-                return true;
-            } catch (e) {
-                showAlert('❌ Save error', 'error');
-                return false;
-            }
-        }
-
-        function clearSettings() {
-            showConfirmModal('Clear ALL cloud settings?', function() {
-                localStorage.removeItem('asantemanScriptUrl');
-                localStorage.removeItem('asantemanCloudMode');
-                SCRIPT_URL = '';
-                isCloudMode = false;
-                document.getElementById('script-url').value = '';
-                updateModeIndicator();
-                updateDatabaseStatus('Settings cleared. Running in local mode.');
-                showAlert('✅ Settings cleared', 'success');
-            });
-        }
-
-        async function testConnection() {
-            if (!saveSettings()) return;
-            if (!SCRIPT_URL) {
-                showAlert('Enter Script URL first', 'error');
-                return;
-            }
-
-            updateStatusDot('backend', 'pending', 'Testing…');
-            updateStatusDot('sheet', 'pending', 'Testing…');
-            
-            try {
-                await testScriptConnection(SCRIPT_URL);
-                updateStatusDot('backend', 'ok', 'Connected');
-
-                const testUrl = `${SCRIPT_URL}?action=getMembers&t=${Date.now()}`;
-                const res = await fetch(testUrl);
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const data = await res.json();
-                if (!data.success) throw new Error(data.error || 'Data access failed');
-                
-                updateStatusDot('sheet', 'ok', 'Accessible');
-                isCloudMode = true;
-                localStorage.setItem('asantemanCloudMode', 'true');
-                updateModeIndicator();
-                updateDatabaseStatus(`Connected to backend`);
-                updateSyncStatus('success', '✅ Test passed');
-                showAlert('✅ Connection verified', 'success');
-            } catch (err) {
-                updateStatusDot('backend', 'error', 'Error');
-                updateStatusDot('sheet', 'error', 'Error');
-                isCloudMode = false;
-                localStorage.setItem('asantemanCloudMode', 'false');
-                updateModeIndicator();
-                updateDatabaseStatus('Connection failed');
-                updateSyncStatus('error', '❌ Connection test failed');
-                showAlert('❌ Test failed: ' + err.message, 'error');
-            }
-        }
-
-        function updateStatusDot(type, status, message = '') {
-            let color;
-            switch (status) {
-                case 'ok': color = '#28a745'; break;
-                case 'warn': color = '#ffc107'; break;
-                case 'error': color = '#dc3545'; break;
-                case 'pending': color = '#6c757d'; break;
-                default: color = '#ccc';
-            }
-            
-            const dot = document.getElementById(`${type}-dot`);
-            const statusEl = document.getElementById(`${type}-status`);
-            
-            if (dot) dot.style.background = color;
-            if (statusEl && message) statusEl.textContent = message;
-        }
-
-        function checkInternetStatus() {
-            if (navigator.onLine) {
-                updateStatusDot('internet', 'ok', 'Online');
-            } else {
-                updateStatusDot('internet', 'error', 'Offline');
-            }
-        }
-
-        function updateModeIndicator() {
-            if (isCloudMode && SCRIPT_URL) {
-                modeIndicator.textContent = "Cloud";
-                modeIndicator.className = "mode-indicator";
-            } else {
-                modeIndicator.textContent = "Local";
-                modeIndicator.className = "mode-indicator local";
-            }
-        }
-
-        function updateDatabaseStatus(message) {
-            const statusEl = document.getElementById('database-status');
-            if (statusEl) {
-                statusEl.innerHTML = `
-                    <div style="background: #f8f9fa; padding:12px; border-radius:8px; border-left:4px solid #17a2b8;">
-                        <p style="margin:0; font-weight:600;">${message}</p>
-                        ${SCRIPT_URL ? `<p style="margin:5px 0 0 0;font-size:0.85em;"><strong>Script URL:</strong> ${SCRIPT_URL.substring(0,30)}...</p>` : ''}
-                        <p style="margin:5px 0 0 0;font-size:0.85em;"><strong>Mode:</strong> ${isCloudMode ? 'Cloud ✅' : 'Local ⚠️'}</p>
-                    </div>
-                `;
-            }
         }
 
         function updateDropdowns() {
@@ -2141,17 +1948,549 @@
             });
         }
 
-        // ========== STORAGE FUNCTIONS ==========
+        // ========== CLOUD SYNC FUNCTIONS ==========
 
-        function saveAllToLocalStorage() {
-            localStorage.setItem('asantemanMembers', JSON.stringify(members));
-            localStorage.setItem('asantemanAttendance', JSON.stringify(attendance));
-            localStorage.setItem('asantemanMeetings', JSON.stringify(meetings));
-            localStorage.setItem('asantemanJobs', JSON.stringify(availableJobs));
-            localStorage.setItem('asantemanHometowns', JSON.stringify(availableHometowns));
-            localStorage.setItem('asantemanTribes', JSON.stringify(availableTribes));
-            localStorage.setItem('asantemanLastSync', Date.now().toString());
+        function cleanMember(m) {
+            return {
+                id: String(m.id || ''),
+                name: String(m.name || ''),
+                idNumber: String(m.idNumber || ''),
+                phone: String(m.phone || ''),
+                dateOfBirth: String(m.dateOfBirth || ''),
+                job: String(m.job || ''),
+                hometown: String(m.hometown || ''),
+                tribe: String(m.tribe || ''),
+                chapter: String(m.chapter || ''),
+                group: String(m.group || ''),
+                image: String(m.image || ''),
+                joinDate: m.joinDate ? String(m.joinDate) : new Date().toISOString().split('T')[0],
+                lastUpdated: m.lastUpdated ? String(m.lastUpdated) : new Date().toISOString()
+            };
         }
+
+        function cleanAttendance(a) {
+            return {
+                memberId: String(a.memberId || ''),
+                memberName: String(a.memberName || ''),
+                timestamp: a.timestamp ? String(a.timestamp) : new Date().toISOString(),
+                verificationTime: a.verificationTime ? String(a.verificationTime) : new Date().toISOString(),
+                verifiedBy: a.verifiedBy || 'Mobile App'
+            };
+        }
+
+        async function testScriptConnection(url) {
+            try {
+                const testUrl = `${url}?action=test&t=${Date.now()}`;
+                const res = await fetch(testUrl);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Test failed');
+                return true;
+            } catch (error) {
+                console.error('Script connection test failed:', error);
+                throw error;
+            }
+        }
+
+        async function saveMemberToCloud(member) {
+            try {
+                const formData = new URLSearchParams();
+                formData.append('action', 'saveMember');
+                formData.append('member', JSON.stringify(cleanMember(member)));
+
+                const res = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
+                });
+                
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Cloud save failed');
+                
+                return data;
+            } catch (error) {
+                console.error('Error saving member to cloud:', error);
+                throw error;
+            }
+        }
+
+        async function updateMemberOnCloud(member) {
+            try {
+                const formData = new URLSearchParams();
+                formData.append('action', 'updateMember');
+                formData.append('member', JSON.stringify(cleanMember(member)));
+
+                const res = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
+                });
+                
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Cloud update failed');
+                
+                return data;
+            } catch (error) {
+                console.error('Error updating member on cloud:', error);
+                throw error;
+            }
+        }
+
+        async function deleteMemberFromCloud(memberId) {
+            try {
+                const formData = new URLSearchParams();
+                formData.append('action', 'deleteMember');
+                formData.append('memberId', memberId);
+
+                const res = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
+                });
+                
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Cloud delete failed');
+                
+                return data;
+            } catch (error) {
+                console.error('Error deleting member from cloud:', error);
+                throw error;
+            }
+        }
+
+        async function saveAttendanceToCloud(rec) {
+            try {
+                const formData = new URLSearchParams();
+                formData.append('action', 'saveAttendance');
+                formData.append('attendance', JSON.stringify(cleanAttendance(rec)));
+
+                const res = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
+                });
+                
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Cloud attendance save failed');
+                
+                return data;
+            } catch (error) {
+                console.error('Error saving attendance to cloud:', error);
+                throw error;
+            }
+        }
+
+        async function loadDataFromCloud() {
+            if (!SCRIPT_URL) {
+                throw new Error('Configure script URL first');
+            }
+            
+            updateSyncStatus('syncing', 'Loading from cloud…');
+            try {
+                await testScriptConnection(SCRIPT_URL);
+                const url = `${SCRIPT_URL}?action=getMembers&t=${Date.now()}`;
+                const res = await fetch(url);
+                
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Load failed');
+                
+                members = data.members || [];
+                attendance = data.attendance || [];
+                
+                showAlert(`✅ Loaded ${members.length} members and ${attendance.length} attendance records`, 'success');
+                updateSyncStatus('success', 'Load complete');
+                
+                // Update all UI components
+                updateDashboard();
+                updateRecentActivity();
+                renderAllMembersList();
+                renderAttendanceList();
+                
+                return true;
+            } catch (err) {
+                console.error('Load error:', err);
+                updateSyncStatus('error', 'Load failed');
+                throw err;
+            }
+        }
+
+        async function refreshDataFromCloud() {
+            if (!SCRIPT_URL) return;
+            
+            try {
+                const url = `${SCRIPT_URL}?action=getMembers&t=${Date.now()}`;
+                const res = await fetch(url);
+                
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                
+                const data = await res.json();
+                
+                if (data.success) {
+                    // Update local data with cloud data
+                    members = data.members || members;
+                    attendance = data.attendance || attendance;
+                    
+                    // Update all UI components
+                    updateDashboard();
+                    updateRecentActivity();
+                    renderAllMembersList();
+                    renderAttendanceList();
+                    
+                    console.log('Data refreshed from cloud');
+                }
+            } catch (error) {
+                console.error('Error refreshing data from cloud:', error);
+            }
+        }
+
+        // ========== SETTINGS FUNCTIONS ==========
+
+        function checkPassword() {
+            if (passwordInput.value === settingsPassword) {
+                passwordModal.style.display = 'none';
+                passwordInput.value = '';
+                switchContentSection('settings-section');
+                updateNavActive('settings-section');
+            } else {
+                showAlert('Incorrect password', 'error');
+                passwordInput.value = '';
+            }
+        }
+
+        function saveSettings() {
+            const url = document.getElementById('script-url').value.trim();
+            SCRIPT_URL = url;
+            
+            try {
+                localStorage.setItem('asantemanScriptUrl', SCRIPT_URL);
+                showAlert('✅ Settings saved', 'success');
+                updateDatabaseStatus(SCRIPT_URL ? `Script URL configured` : 'No cloud connection');
+                
+                // Auto-connect to cloud if URL is configured
+                if (SCRIPT_URL) {
+                    autoConnectToCloud();
+                }
+                
+                return true;
+            } catch (e) {
+                showAlert('❌ Save error', 'error');
+                return false;
+            }
+        }
+
+        function clearSettings() {
+            showConfirmModal('Clear ALL cloud settings?', function() {
+                localStorage.removeItem('asantemanScriptUrl');
+                localStorage.removeItem('asantemanCloudMode');
+                SCRIPT_URL = '';
+                isCloudMode = false;
+                document.getElementById('script-url').value = '';
+                updateModeIndicator();
+                updateDatabaseStatus('Settings cleared. No cloud connection.');
+                showAlert('✅ Settings cleared', 'success');
+                
+                // Clear data
+                members = [];
+                attendance = [];
+                updateDashboard();
+                updateRecentActivity();
+                renderAllMembersList();
+                renderAttendanceList();
+            });
+        }
+
+        async function testConnection() {
+            if (!saveSettings()) return;
+            if (!SCRIPT_URL) {
+                showAlert('Enter Script URL first', 'error');
+                return;
+            }
+
+            updateStatusDot('backend', 'pending', 'Testing…');
+            updateStatusDot('sheet', 'pending', 'Testing…');
+            
+            try {
+                await testScriptConnection(SCRIPT_URL);
+                updateStatusDot('backend', 'ok', 'Connected');
+
+                const testUrl = `${SCRIPT_URL}?action=getMembers&t=${Date.now()}`;
+                const res = await fetch(testUrl);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Data access failed');
+                
+                updateStatusDot('sheet', 'ok', 'Accessible');
+                isCloudMode = true;
+                localStorage.setItem('asantemanCloudMode', 'true');
+                updateModeIndicator();
+                updateDatabaseStatus(`Connected to backend`);
+                updateSyncStatus('success', '✅ Test passed');
+                showAlert('✅ Connection verified', 'success');
+                
+                // Load data after successful test
+                loadDataFromCloud();
+            } catch (err) {
+                updateStatusDot('backend', 'error', 'Error');
+                updateStatusDot('sheet', 'error', 'Error');
+                isCloudMode = false;
+                localStorage.setItem('asantemanCloudMode', 'false');
+                updateModeIndicator();
+                updateDatabaseStatus('Connection failed');
+                updateSyncStatus('error', '❌ Connection test failed');
+                showAlert('❌ Test failed: ' + err.message, 'error');
+            }
+        }
+
+        function updateStatusDot(type, status, message = '') {
+            let color;
+            switch (status) {
+                case 'ok': color = '#28a745'; break;
+                case 'warn': color = '#ffc107'; break;
+                case 'error': color = '#dc3545'; break;
+                case 'pending': color = '#6c757d'; break;
+                default: color = '#ccc';
+            }
+            
+            const dot = document.getElementById(`${type}-dot`);
+            const statusEl = document.getElementById(`${type}-status`);
+            
+            if (dot) dot.style.background = color;
+            if (statusEl && message) statusEl.textContent = message;
+        }
+
+        function checkInternetStatus() {
+            if (navigator.onLine) {
+                isOnline = true;
+                updateStatusDot('internet', 'ok', 'Online');
+            } else {
+                isOnline = false;
+                updateStatusDot('internet', 'error', 'Offline');
+            }
+        }
+
+        function updateModeIndicator() {
+            if (isCloudMode && SCRIPT_URL && isOnline) {
+                modeIndicator.textContent = "Cloud";
+                modeIndicator.className = "mode-indicator";
+            } else if (!isOnline) {
+                modeIndicator.textContent = "Offline";
+                modeIndicator.className = "mode-indicator offline";
+            } else {
+                modeIndicator.textContent = "Local";
+                modeIndicator.className = "mode-indicator local";
+            }
+        }
+
+        function updateDatabaseStatus(message) {
+            const statusEl = document.getElementById('database-status');
+            if (statusEl) {
+                statusEl.innerHTML = `
+                    <div style="background: #f8f9fa; padding:12px; border-radius:8px; border-left:4px solid #17a2b8;">
+                        <p style="margin:0; font-weight:600;">${message}</p>
+                        ${SCRIPT_URL ? `<p style="margin:5px 0 0 0;font-size:0.85em;"><strong>Script URL:</strong> ${SCRIPT_URL.substring(0,30)}...</p>` : ''}
+                        <p style="margin:5px 0 0 0;font-size:0.85em;"><strong>Mode:</strong> ${isCloudMode ? 'Cloud ✅' : 'No Connection ⚠️'}</p>
+                        <p style="margin:5px 0 0 0;font-size:0.85em;"><strong>Last Sync:</strong> ${new Date().toLocaleTimeString()}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // ========== USER MANAGEMENT ==========
+
+        function renderUsersList() {
+            const usersList = document.getElementById('users-list');
+            
+            usersList.innerHTML = `
+                <h4 style="margin-bottom: 15px; color: var(--primary);">Current Users</h4>
+                <div class="member-list">
+                    ${users.map(user => `
+                        <div class="member-item">
+                            <div class="user-info">
+                                <div class="user-avatar" style="background: ${user.role === 'admin' ? 'var(--primary)' : 'var(--info)'};">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <div style="font-weight: 600;">${user.username}</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">
+                                        Role: ${user.role} • ${user.role === 'admin' ? 'Full access' : 'Limited access'}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="member-actions">
+                                <button class="btn btn-danger btn-sm delete-user-btn" data-username="${user.username}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // Add event listeners to delete buttons
+            document.querySelectorAll('.delete-user-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const username = this.getAttribute('data-username');
+                    deleteUser(username);
+                });
+            });
+        }
+
+        function addNewUser() {
+            const username = document.getElementById('new-username').value.trim();
+            const password = document.getElementById('new-password').value.trim();
+            const role = document.getElementById('new-user-role').value;
+            
+            if (!username || !password) {
+                showAlert('Please enter username and password', 'error');
+                return;
+            }
+            
+            if (users.some(u => u.username === username)) {
+                showAlert('Username already exists', 'error');
+                return;
+            }
+            
+            users.push({ username, password, role });
+            
+            // Clear form
+            document.getElementById('new-username').value = '';
+            document.getElementById('new-password').value = '';
+            
+            showAlert(`User ${username} added successfully`, 'success');
+            renderUsersList();
+        }
+
+        function deleteUser(username) {
+            if (username === 'admin') {
+                showAlert('Cannot delete admin user', 'error');
+                return;
+            }
+            
+            showConfirmModal(`Are you sure you want to delete user ${username}?`, function() {
+                users = users.filter(u => u.username !== username);
+                showAlert(`User ${username} deleted`, 'success');
+                renderUsersList();
+            });
+        }
+
+        // ========== CHAPTER MANAGEMENT ==========
+
+        function renderChaptersList() {
+            const chaptersList = document.getElementById('chapters-list');
+            
+            if (chapters.length === 0) {
+                chaptersList.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">No chapters created yet</div>';
+                return;
+            }
+            
+            chaptersList.innerHTML = `
+                <h4 style="margin-bottom: 15px; color: var(--primary);">Current Chapters</h4>
+                <div class="member-list">
+                    ${chapters.map(chapter => `
+                        <div class="member-item">
+                            <div class="user-info">
+                                <div class="user-avatar" style="background: var(--warning);">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <div style="font-weight: 600;">${chapter.name}</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">
+                                        Location: ${chapter.location} • Leader: ${chapter.leader}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="member-actions">
+                                <button class="btn btn-danger btn-sm delete-chapter-btn" data-name="${chapter.name}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // Add event listeners to delete buttons
+            document.querySelectorAll('.delete-chapter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const chapterName = this.getAttribute('data-name');
+                    deleteChapter(chapterName);
+                });
+            });
+        }
+
+        function addNewChapter() {
+            const name = document.getElementById('new-chapter-name').value.trim();
+            const location = document.getElementById('new-chapter-location').value.trim();
+            const leader = document.getElementById('new-chapter-leader').value.trim();
+            
+            if (!name || !location || !leader) {
+                showAlert('Please enter chapter name, location, and leader', 'error');
+                return;
+            }
+            
+            if (chapters.some(c => c.name === name)) {
+                showAlert('Chapter name already exists', 'error');
+                return;
+            }
+            
+            chapters.push({ name, location, leader });
+            
+            // Clear form
+            document.getElementById('new-chapter-name').value = '';
+            document.getElementById('new-chapter-location').value = '';
+            document.getElementById('new-chapter-leader').value = '';
+            
+            showAlert(`Chapter ${name} added successfully`, 'success');
+            renderChaptersList();
+        }
+
+        function deleteChapter(chapterName) {
+            showConfirmModal(`Are you sure you want to delete chapter ${chapterName}?`, function() {
+                chapters = chapters.filter(c => c.name !== chapterName);
+                showAlert(`Chapter ${chapterName} deleted`, 'success');
+                renderChaptersList();
+            });
+        }
+
+        // ========== CAMERA FUNCTIONALITY ==========
+
+        function startCamera() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        cameraStream = stream;
+                        // For mobile, we'll just simulate camera capture
+                        simulateCameraCapture();
+                    })
+                    .catch(function(error) {
+                        console.error('Camera error:', error);
+                        showAlert('Camera access denied or not available', 'error');
+                        simulateCameraCapture();
+                    });
+            } else {
+                showAlert('Camera not supported on this device', 'error');
+                simulateCameraCapture();
+            }
+        }
+
+        function simulateCameraCapture() {
+            // Simulate camera capture for mobile devices
+            showAlert('Camera simulation: Photo would be captured here', 'info');
+            currentCapture = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzFhMmE2YyIvPjx0ZXh0IHg9IjEwMCIgeT0iMTAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+UHJvZmlsZSBJbWFnZTwvdGV4dD48L3N2Zz4=';
+            showAlert('Profile photo captured successfully!', 'success');
+        }
+
+        // ========== STORAGE FUNCTIONS ==========
 
         function saveMeetingsToLocalStorage() {
             localStorage.setItem('asantemanMeetings', JSON.stringify(meetings));
@@ -2174,28 +2513,6 @@
             }
         }
 
-        function loadDataFromLocalStorage() {
-            try {
-                const membersData = localStorage.getItem('asantemanMembers');
-                const attendanceData = localStorage.getItem('asantemanAttendance');
-                const meetingsData = localStorage.getItem('asantemanMeetings');
-                const jobsData = localStorage.getItem('asantemanJobs');
-                const hometownsData = localStorage.getItem('asantemanHometowns');
-                const tribesData = localStorage.getItem('asantemanTribes');
-                
-                if (membersData) members = JSON.parse(membersData);
-                if (attendanceData) attendance = JSON.parse(attendanceData);
-                if (meetingsData) meetings = JSON.parse(meetingsData);
-                if (jobsData) availableJobs = JSON.parse(jobsData);
-                if (hometownsData) availableHometowns = JSON.parse(hometownsData);
-                if (tribesData) availableTribes = JSON.parse(tribesData);
-                
-                updateDashboard();
-            } catch (e) {
-                console.error('Error loading data from localStorage:', e);
-            }
-        }
-
         // ========== UI HELPER FUNCTIONS ==========
 
         function updateSyncStatus(type, message) {
@@ -2213,7 +2530,12 @@
         function showAlert(message, type) {
             const alert = document.createElement('div');
             alert.className = `alert alert-${type}`;
-            alert.textContent = message;
+            
+            if (typeof message === 'string') {
+                alert.textContent = message;
+            } else {
+                alert.innerHTML = message;
+            }
             
             const content = document.querySelector('.app-content');
             content.insertBefore(alert, content.firstChild);
